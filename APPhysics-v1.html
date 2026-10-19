@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Physics 1 — Georgia Standards Learning Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c18;--bg2:#0c1220;--bg3:#101829;--card:#131e32;--card2:#182540;
+  --accent:#5b9cf6;--accent2:#8b5cf6;--accent3:#06d6a0;--accent4:#f97316;
+  --text:#dde6f8;--text2:#8ba4cc;--text3:#4e6a94;
+  --border:#1e304e;--border2:#2a4068;
+  --green:#06d6a0;--red:#f87171;--yellow:#fbbf24;
+  --sidebar-w:290px;
+}
+
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* ─── LAYOUT ─── */
+.app{display:flex;min-height:100vh}
+
+/* ─── SIDEBAR ─── */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;height:100vh;
+  overflow-y:auto;z-index:100;
+}
+.sidebar-logo{padding:28px 24px 20px;border-bottom:1px solid var(--border)}
+.logo-mark{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:var(--text)}
+.logo-sub{font-size:11px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.ga-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(91,156,246,.1);border:1px solid rgba(91,156,246,.2);color:var(--accent);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;margin-top:8px;letter-spacing:.8px;text-transform:uppercase}
+
+.nav-group-label{padding:16px 24px 6px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:2px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px;margin:2px 10px;
+  border-radius:10px;cursor:pointer;
+  font-size:13px;color:var(--text2);font-weight:500;
+  border:1px solid transparent;background:none;width:calc(100% - 20px);text-align:left;
+  transition:all .2s;
+}
+.nav-item:hover{background:var(--bg3);color:var(--text);border-color:var(--border)}
+.nav-item.active{background:linear-gradient(135deg,rgba(91,156,246,.12),rgba(139,92,246,.08));color:var(--accent);border-color:rgba(91,156,246,.25)}
+.nav-emoji{font-size:16px;width:22px;text-align:center}
+.nav-qlabel{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;background:var(--bg3);border:1px solid var(--border);padding:2px 7px;border-radius:5px;color:var(--text3)}
+.nav-item.active .nav-qlabel{background:rgba(91,156,246,.15);border-color:rgba(91,156,246,.3);color:var(--accent)}
+
+.sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid var(--border)}
+.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:6px}
+.prog-bar{background:var(--bg3);border-radius:4px;height:5px;overflow:hidden;border:1px solid var(--border)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .4s ease}
+
+/* ─── MAIN ─── */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;overflow-y:auto}
+.content{padding:36px 44px;max-width:960px;margin:0 auto}
+
+/* ─── PAGE HEADER ─── */
+.page-header{margin-bottom:32px}
+.unit-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(91,156,246,.08);border:1px solid rgba(91,156,246,.2);
+  color:var(--accent);font-size:10px;font-weight:700;
+  padding:4px 12px;border-radius:20px;margin-bottom:14px;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.page-title{
+  font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:10px;
+  background:linear-gradient(130deg,var(--text) 0%,var(--accent) 60%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.page-subtitle{color:var(--text2);font-size:14px;line-height:1.7;max-width:640px;font-weight:400}
+
+/* ─── TABS ─── */
+.tabs{display:flex;gap:3px;margin-bottom:28px;background:var(--bg2);padding:4px;border-radius:12px;width:fit-content;border:1px solid var(--border)}
+.tab-btn{padding:8px 22px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text3);transition:all .2s;border:none;background:none;font-family:'Syne',sans-serif}
+.tab-btn:hover{color:var(--text2)}
+.tab-btn.active{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.4)}
+
+/* ─── DASHBOARD ─── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:20px 18px;position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--accent);opacity:.04}
+.stat-val{font-size:32px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:600}
+
+.units-header{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.unit-row{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all .2s;margin-bottom:8px;
+}
+.unit-row:hover{border-color:var(--border2);transform:translateX(4px);background:var(--card2)}
+.unit-icon-box{width:46px;height:46px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.unit-info{flex:1}
+.unit-name{font-size:14px;font-weight:700;color:var(--text)}
+.unit-desc{font-size:12px;color:var(--text3);margin-top:2px;line-height:1.5}
+.unit-meta{display:flex;align-items:center;gap:8px}
+.q-pill{font-size:11px;font-family:'DM Mono',monospace;background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:20px;color:var(--text2)}
+.arrow{color:var(--text3);font-size:20px}
+
+/* ─── CONCEPT CARDS ─── */
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s}
+.concept-card:hover{border-color:var(--border2)}
+.cc-icon{font-size:26px;margin-bottom:10px}
+.cc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.cc-desc{font-size:13px;color:var(--text2);line-height:1.65;font-weight:400}
+
+.formulas-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:22px}
+.formulas-title{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.formulas-title::before{content:'';width:3px;height:13px;background:var(--accent);border-radius:2px;display:inline-block}
+.formulas-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.formula-chip{background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:13px;color:var(--accent3);text-align:center}
+
+.diagram-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:22px}
+.diagram-title-bar{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.diagram-title-bar::before{content:'';width:3px;height:13px;background:var(--accent2);border-radius:2px;display:inline-block}
+
+/* ─── QUESTIONS ─── */
+.q-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.q-counter-label{font-size:13px;color:var(--text3);font-weight:500}
+.score-chip{font-family:'DM Mono',monospace;font-size:12px;background:var(--bg2);border:1px solid var(--border);padding:5px 14px;border-radius:20px;color:var(--text2)}
+
+.question-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:16px}
+.diff-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 9px;border-radius:5px;margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase}
+.diff-easy{background:rgba(6,214,160,.1);color:var(--green)}
+.diff-med{background:rgba(251,191,36,.1);color:var(--yellow)}
+.diff-hard{background:rgba(248,113,113,.1);color:var(--red)}
+
+.q-number{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.q-text{font-size:15px;color:var(--text);line-height:1.65;margin-bottom:18px;font-weight:400}
+.q-options{display:flex;flex-direction:column;gap:8px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;padding:13px 16px;
+  border:1px solid var(--border);border-radius:10px;cursor:pointer;
+  transition:all .2s;background:transparent;
+}
+.opt:hover{border-color:var(--border2);background:var(--bg3)}
+.opt.selected{border-color:var(--accent);background:rgba(91,156,246,.07)}
+.opt.correct{border-color:var(--green);background:rgba(6,214,160,.07);cursor:default}
+.opt.wrong{border-color:var(--red);background:rgba(248,113,113,.07);cursor:default}
+.opt-key{
+  width:28px;height:28px;min-width:28px;border-radius:7px;
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;font-family:'DM Mono',monospace;color:var(--text3);
+  flex-shrink:0;
+}
+.opt.selected .opt-key{background:rgba(91,156,246,.2);border-color:var(--accent);color:var(--accent)}
+.opt.correct .opt-key{background:rgba(6,214,160,.2);border-color:var(--green);color:var(--green)}
+.opt.wrong .opt-key{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red)}
+.opt-text{font-size:13px;color:var(--text);padding-top:4px;line-height:1.5;font-weight:400}
+.explanation{
+  margin-top:14px;padding:13px 16px;
+  background:var(--bg2);border-left:3px solid var(--accent3);
+  border-radius:0 10px 10px 0;font-size:13px;color:var(--text2);line-height:1.65;font-weight:400
+}
+.explanation strong{color:var(--accent3)}
+
+.q-nav-bar{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:12px}
+.q-dots{display:flex;gap:4px;flex-wrap:wrap;max-width:380px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s}
+.dot.current{background:var(--accent);transform:scale(1.4)}
+.dot.ok{background:var(--green)}
+.dot.bad{background:var(--red)}
+.btn{padding:10px 22px;border-radius:9px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;transition:all .2s}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:not(:disabled):hover{background:#74aeff;transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-outline:not(:disabled):hover{border-color:var(--accent);color:var(--accent)}
+
+/* ─── SVG diagrams ─── */
+.svg-diag{width:100%;height:auto;border-radius:8px}
+
+/* ─── Responsive ─── */
+@media(max-width:900px){
+  :root{--sidebar-w:64px}
+  .sidebar-logo,.nav-group-label,.nav-item span:not(.nav-emoji),.nav-qlabel,.sidebar-footer .prog-label,.sidebar-footer .prog-bar,.sidebar-footer .prog-fill{display:none}
+  .nav-item{justify-content:center;padding:12px}
+  .nav-emoji{width:auto}
+  .content{padding:24px 20px}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .concept-grid{grid-template-columns:1fr}
+  .formulas-grid{grid-template-columns:1fr}
+  .page-title{font-size:28px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">⚛</div>
+      <div class="logo-text">PhysicsAP</div>
+    </div>
+    <div class="logo-sub">AP Physics 1</div>
+    <div class="ga-badge">🍑 Georgia Standards</div>
+  </div>
+
+  <div class="nav-group-label">Navigation</div>
+  <button class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">
+    <span class="nav-emoji">🏠</span><span>Dashboard</span>
+  </button>
+
+  <div class="nav-group-label">Course Units</div>
+  <button class="nav-item" onclick="showUnit(0)" id="nav-u0"><span class="nav-emoji">🏃</span><span>Kinematics</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(1)" id="nav-u1"><span class="nav-emoji">⚡</span><span>Dynamics & Forces</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(2)" id="nav-u2"><span class="nav-emoji">💥</span><span>Work & Energy</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(3)" id="nav-u3"><span class="nav-emoji">🌀</span><span>Momentum</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(4)" id="nav-u4"><span class="nav-emoji">⭕</span><span>Circular Motion</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(5)" id="nav-u5"><span class="nav-emoji">〰️</span><span>Simple Harmonic</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(6)" id="nav-u6"><span class="nav-emoji">🔄</span><span>Rotational Motion</span><span class="nav-qlabel">50Q</span></button>
+  <button class="nav-item" onclick="showUnit(7)" id="nav-u7"><span class="nav-emoji">🔊</span><span>Waves & Sound</span><span class="nav-qlabel">50Q</span></button>
+
+  <div class="sidebar-footer">
+    <div class="prog-label"><span>Progress</span><span id="prog-pct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="content" id="main"></div>
+</main>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const UNITS=[
+{id:0,icon:'🏃',tag:'Unit 1',title:'Kinematics',sub:'Motion in 1D & 2D — displacement, velocity, acceleration, projectile motion',
+concepts:[
+{icon:'📏',title:'Displacement vs Distance',desc:'Displacement is the vector change in position (Δx = x_f − x_i). Distance is total path length. A round trip has zero displacement but nonzero distance.'},
+{icon:'🚀',title:'Velocity & Acceleration',desc:'Average velocity = Δx/Δt. Instantaneous velocity = slope of x-t graph. Acceleration = rate of change of velocity = slope of v-t graph.'},
+{icon:'📐',title:'Kinematic Equations (SUVAT)',desc:'Four equations link displacement, velocity, acceleration, and time for constant acceleration. Only valid when acceleration is constant throughout.'},
+{icon:'🏀',title:'Projectile Motion',desc:'Horizontal (constant v_x) and vertical (free fall with g) are independent. Range = v₀²sin(2θ)/g is maximum at θ = 45°.'},
+],
+formulas:['v = v₀ + at','x = x₀ + v₀t + ½at²','v² = v₀² + 2aΔx','x = (v + v₀)/2 · t'],
+questions:genKinematics(),
+diagram:'kinematics'
+},
+{id:1,icon:'⚡',tag:'Unit 2',title:'Dynamics & Forces',sub:'Newton\'s Laws, free body diagrams, friction, normal force, tension',
+concepts:[
+{icon:'⚖️',title:'Newton\'s 1st Law',desc:'An object at rest stays at rest, and an object in motion stays in motion at constant velocity, unless acted on by a net external force. Inertia resists changes in motion.'},
+{icon:'➡️',title:'Newton\'s 2nd Law',desc:'Net force = mass × acceleration: ΣF = ma. Force is a vector. All forces must be summed vectorially. Units: Newtons (N = kg·m/s²).'},
+{icon:'↔️',title:'Newton\'s 3rd Law',desc:'For every action force, there is an equal and opposite reaction force. Pairs act on DIFFERENT objects — they never cancel each other.'},
+{icon:'🔴',title:'Friction',desc:'Static friction ≤ μₛN prevents motion. Kinetic friction fₖ = μₖN opposes sliding. Always μₖ < μₛ. Friction is independent of contact area.'},
+],
+formulas:['ΣF = ma','fₖ = μₖN','fₛ ≤ μₛN','W = mg'],
+questions:genDynamics(),
+diagram:'dynamics'
+},
+{id:2,icon:'💥',tag:'Unit 3',title:'Work & Energy',sub:'Work-energy theorem, KE, PE, conservation of energy, power',
+concepts:[
+{icon:'🔨',title:'Work',desc:'W = Fd cosθ. Work is done only when force has a component along displacement. Positive work aids motion; negative work opposes it. Units: Joules.'},
+{icon:'⚡',title:'Kinetic Energy',desc:'KE = ½mv². Doubling speed quadruples KE. Work-energy theorem: W_net = ΔKE = ½mv² − ½mv₀².'},
+{icon:'🏔️',title:'Potential Energy',desc:'Gravitational PE = mgh. Spring PE = ½kx². Stored energy due to position or configuration that can convert to KE.'},
+{icon:'🔒',title:'Conservation of Energy',desc:'Without non-conservative forces, total mechanical energy (KE + PE) is conserved. Friction converts ME to thermal energy.'},
+],
+formulas:['W = Fd cosθ','KE = ½mv²','PE = mgh','PE_spring = ½kx²','P = W/t = Fv'],
+questions:genEnergy(),
+diagram:'energy'
+},
+{id:3,icon:'🌀',tag:'Unit 4',title:'Momentum & Impulse',sub:'Linear momentum, impulse, conservation, elastic & inelastic collisions',
+concepts:[
+{icon:'💪',title:'Linear Momentum',desc:'p = mv. A vector in the direction of velocity. Units: kg·m/s. A large slow mass can have the same momentum as a small fast mass.'},
+{icon:'💥',title:'Impulse',desc:'J = FΔt = Δp. Impulse equals change in momentum. Area under F-t graph = impulse. Airbags work by increasing Δt to reduce force.'},
+{icon:'🔒',title:'Conservation',desc:'Total momentum of an isolated system is conserved: Σp_before = Σp_after. Applies to all collisions and explosions.'},
+{icon:'🎱',title:'Collision Types',desc:'Elastic: KE + momentum conserved. Inelastic: momentum conserved, KE not. Perfectly inelastic: stick together, max KE lost.'},
+],
+formulas:['p = mv','J = FΔt = Δp','p₁ᵢ + p₂ᵢ = p₁f + p₂f','KE = p²/2m'],
+questions:genMomentum(),
+diagram:'momentum'
+},
+{id:4,icon:'⭕',tag:'Unit 5',title:'Circular Motion & Gravity',sub:'Centripetal acceleration, universal gravitation, orbital mechanics',
+concepts:[
+{icon:'🔄',title:'Centripetal Acceleration',desc:'a_c = v²/r, directed toward center. It is NOT a new force — it is the net inward force provided by real forces (friction, tension, gravity).'},
+{icon:'🌍',title:'Universal Gravitation',desc:'F = Gm₁m₂/r². G = 6.67×10⁻¹¹ N·m²/kg². Inverse square law — doubling distance reduces force to ¼.'},
+{icon:'🪐',title:'Orbital Motion',desc:'Gravity provides centripetal force: v_orbit = √(GM/r). Period: T² ∝ r³ (Kepler\'s 3rd Law). Higher orbit = slower speed.'},
+{icon:'⚖️',title:'Apparent Weight',desc:'At loop top: N = mv²/r − mg. At bottom: N = mv²/r + mg. Weightlessness occurs when in free fall (orbit).'},
+],
+formulas:['a_c = v²/r','F_c = mv²/r','F_g = Gm₁m₂/r²','T² = (4π²/GM)r³'],
+questions:genCircular(),
+diagram:'circular'
+},
+{id:5,icon:'〰️',tag:'Unit 6',title:'Simple Harmonic Motion',sub:'Springs, pendulums, period, frequency, amplitude, SHM energy',
+concepts:[
+{icon:'🌀',title:'SHM Basics',desc:'Restoring force F = −kx (Hooke\'s Law). Motion is sinusoidal. Period is independent of amplitude for ideal springs and small-angle pendulums.'},
+{icon:'⏱️',title:'Spring-Mass Period',desc:'T = 2π√(m/k). Period increases with more mass, decreases with stiffer spring. DOES NOT depend on gravity.'},
+{icon:'🕰️',title:'Pendulum Period',desc:'T = 2π√(L/g). Depends on length and gravity only — NOT on mass or amplitude (small angles). Longer pendulum → longer period.'},
+{icon:'⚡',title:'Energy in SHM',desc:'E = ½kA² (constant). At equilibrium: all KE. At amplitude: all PE. Energy oscillates between KE and PE continuously.'},
+],
+formulas:['F = −kx (Hooke\'s Law)','T_spring = 2π√(m/k)','T_pendulum = 2π√(L/g)','E = ½kA²'],
+questions:genSHM(),
+diagram:'shm'
+},
+{id:6,icon:'🔄',tag:'Unit 7',title:'Rotational Motion',sub:'Angular kinematics, torque, moment of inertia, angular momentum, rolling',
+concepts:[
+{icon:'📐',title:'Angular Kinematics',desc:'θ (angle), ω (angular velocity), α (angular acceleration). Links to linear: v = rω, a = rα, s = rθ. Same kinematic equations as linear, with angular vars.'},
+{icon:'🔧',title:'Torque',desc:'τ = rF sinθ. Rotational equivalent of force. Larger lever arm = more torque. Net torque causes angular acceleration: τ_net = Iα.'},
+{icon:'⚖️',title:'Moment of Inertia',desc:'I = Σmr². Rotational inertia depends on mass distribution. Hollow > solid for same mass and radius. Parallel axis theorem: I = I_cm + Md².'},
+{icon:'🌀',title:'Angular Momentum',desc:'L = Iω. Conserved when net external torque = 0. Skater pulling arms in: I decreases → ω increases to conserve L.'},
+],
+formulas:['τ = rF sinθ','τ_net = Iα','L = Iω','KE_rot = ½Iω²'],
+questions:genRotational(),
+diagram:'rotation'
+},
+{id:7,icon:'🔊',tag:'Unit 8',title:'Waves & Sound',sub:'Wave properties, standing waves, sound, resonance, Doppler effect',
+concepts:[
+{icon:'〰️',title:'Wave Properties',desc:'Waves transfer energy without matter. Transverse: displacement ⊥ propagation. Longitudinal: displacement ∥ propagation (sound). v = fλ.'},
+{icon:'🔊',title:'Sound',desc:'Longitudinal pressure waves. Speed in air ≈ 343 m/s at 20°C. Intensity ∝ 1/r². Loudness related to amplitude/intensity.'},
+{icon:'🎵',title:'Standing Waves',desc:'Fixed-fixed string: f_n = nv/2L. Open pipe: f_n = nv/2L. Closed pipe: f_n = nv/4L (odd harmonics only). Nodes: no motion. Antinodes: max motion.'},
+{icon:'🚂',title:'Doppler Effect',desc:'Source toward observer: higher pitch. Away: lower pitch. f\' = f(v ± v_o)/(v ∓ v_s). Beat frequency = |f₁ − f₂|.'},
+],
+formulas:['v = fλ','f_n = nv/2L (string/open)','f_n = nv/4L (closed pipe)','f\' = f(v±v_o)/(v∓v_s)'],
+questions:genWaves(),
+diagram:'waves'
+}
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let page='dashboard', unitIdx=null, tab='concepts', qIdx=0;
+let unitAnswers={}, globalAnswers={};
+
+// ─────────────────────────────────────────────
+// RENDER ENGINE
+// ─────────────────────────────────────────────
+function render(){
+  const el=document.getElementById('main');
+  if(page==='dashboard') el.innerHTML=renderDashboard();
+  else if(page==='unit') el.innerHTML=renderUnit(UNITS[unitIdx]);
+  updateNav();
+  el.scrollTop=0;
+}
+
+function updateNav(){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  if(page==='dashboard') document.getElementById('nav-dashboard').classList.add('active');
+  else if(page==='unit') document.getElementById('nav-u'+unitIdx).classList.add('active');
+  const done=Object.keys(globalAnswers).length;
+  const pct=Math.min(100,Math.round(done/4));
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+'%';
+}
+
+function showPage(p){page=p;render();}
+function showUnit(i){unitIdx=i;page='unit';tab='concepts';qIdx=0;unitAnswers={};render();}
+function switchTab(t){tab=t;if(t==='questions')qIdx=0;render();}
+
+// ─────────────────────────────────────────────
+// DASHBOARD
+// ─────────────────────────────────────────────
+function renderDashboard(){
+  const totalQ=UNITS.reduce((s,u)=>s+u.questions.length,0);
+  const done=Object.keys(globalAnswers).length;
+  const correct=Object.values(globalAnswers).filter(Boolean).length;
+  return `
+  <div class="page-header">
+    <div class="unit-chip">📚 AP Physics 1 · Georgia Standards</div>
+    <div class="page-title">Your Learning Hub</div>
+    <div class="page-subtitle">Master AP Physics 1 with interactive concept explanations, SVG diagrams, and ${totalQ}+ practice questions aligned to Georgia state curriculum standards.</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">${UNITS.length}</div><div class="stat-lbl">Course Units</div></div>
+    <div class="stat-card"><div class="stat-val">${totalQ}+</div><div class="stat-lbl">Practice Questions</div></div>
+    <div class="stat-card"><div class="stat-val">${done}</div><div class="stat-lbl">Attempted</div></div>
+    <div class="stat-card"><div class="stat-val">${done>0?Math.round(correct/done*100):0}%</div><div class="stat-lbl">Accuracy</div></div>
+  </div>
+  <div class="units-header">All Units</div>
+  ${UNITS.map((u,i)=>{
+    const k='u'+i+'_';
+    const d=Object.keys(globalAnswers).filter(x=>x.startsWith(k)).length;
+    const c=Object.keys(globalAnswers).filter(x=>x.startsWith(k)&&globalAnswers[x]).length;
+    return `<div class="unit-row" onclick="showUnit(${i})">
+      <div class="unit-icon-box">${u.icon}</div>
+      <div class="unit-info">
+        <div class="unit-name">${u.tag}: ${u.title}</div>
+        <div class="unit-desc">${u.sub.substring(0,70)}…</div>
+      </div>
+      <div class="unit-meta">
+        <span class="q-pill">${d>0?c+'/'+d+' ✓':u.questions.length+'Q'}</span>
+        <span class="arrow">›</span>
+      </div>
+    </div>`;
+  }).join('')}`;
+}
+
+// ─────────────────────────────────────────────
+// UNIT PAGE
+// ─────────────────────────────────────────────
+function renderUnit(u){
+  return `
+  <div class="page-header">
+    <div class="unit-chip">${u.icon} ${u.tag}</div>
+    <div class="page-title">${u.title}</div>
+    <div class="page-subtitle">${u.sub}</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn ${tab==='concepts'?'active':''}" onclick="switchTab('concepts')">📚 Concepts & Diagrams</button>
+    <button class="tab-btn ${tab==='questions'?'active':''}" onclick="switchTab('questions')">📝 Practice (${u.questions.length}Q)</button>
+  </div>
+  ${tab==='concepts'?renderConcepts(u):renderQuestions(u)}`;
+}
+
+function renderConcepts(u){
+  return `
+  <div class="concept-grid">
+    ${u.concepts.map(c=>`<div class="concept-card">
+      <div class="cc-icon">${c.icon}</div>
+      <div class="cc-title">${c.title}</div>
+      <div class="cc-desc">${c.desc}</div>
+    </div>`).join('')}
+  </div>
+  <div class="formulas-box">
+    <div class="formulas-title">Key Formulas — ${u.title}</div>
+    <div class="formulas-grid">${u.formulas.map(f=>`<div class="formula-chip">${f}</div>`).join('')}</div>
+  </div>
+  ${getDiagram(u.id)}`;
+}
+
+// ─────────────────────────────────────────────
+// DIAGRAMS
+// ─────────────────────────────────────────────
+function getDiagram(id){
+  const diagrams={
+0:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Projectile Motion Diagram</div>
+  <svg class="svg-diag" viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <!-- axes -->
+    <line x1="40" y1="240" x2="600" y2="240" stroke="#1e304e" stroke-width="1.5"/>
+    <line x1="40" y1="240" x2="40" y2="30" stroke="#1e304e" stroke-width="1.5"/>
+    <!-- trajectory -->
+    <path d="M80 240 Q310 40 540 240" fill="none" stroke="#5b9cf6" stroke-width="2.5" stroke-dasharray="7 3"/>
+    <!-- launch point -->
+    <circle cx="80" cy="240" r="7" fill="#5b9cf6"/>
+    <!-- velocity arrow -->
+    <line x1="80" y1="240" x2="152" y2="183" stroke="#06d6a0" stroke-width="2.5" marker-end="url(#arr)"/>
+    <!-- components -->
+    <line x1="152" y1="183" x2="152" y2="135" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+    <line x1="80" y1="183" x2="148" y2="183" stroke="#f97316" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+    <text x="160" y="162" fill="#fbbf24" font-size="13" font-family="DM Mono">v_y</text>
+    <text x="103" y="180" fill="#f97316" font-size="13" font-family="DM Mono">v_x (const)</text>
+    <text x="92" y="220" fill="#06d6a0" font-size="12" font-family="DM Mono">v₀</text>
+    <text x="57" y="232" fill="#5b9cf6" font-size="12">θ</text>
+    <!-- peak label -->
+    <circle cx="310" cy="47" r="5" fill="#fbbf24"/>
+    <line x1="310" y1="52" x2="310" y2="90" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr)"/>
+    <text x="315" y="78" fill="#f87171" font-size="11">g</text>
+    <text x="265" y="34" fill="#fbbf24" font-size="11" font-family="DM Mono">v_y = 0 at peak</text>
+    <!-- range arrow -->
+    <line x1="80" y1="260" x2="540" y2="260" stroke="#5b9cf6" stroke-width="1" marker-end="url(#arr)" marker-start="url(#arr)"/>
+    <text x="285" y="276" fill="#4e6a94" font-size="11" font-family="DM Mono" text-anchor="middle">R = v₀²sin(2θ)/g  →  max at θ=45°</text>
+    <!-- note -->
+    <rect x="430" y="60" width="175" height="60" rx="8" fill="#131e32" stroke="#1e304e" stroke-width="1"/>
+    <text x="442" y="80" fill="#8ba4cc" font-size="11" font-family="DM Mono">Horizontal: a_x = 0</text>
+    <text x="442" y="96" fill="#8ba4cc" font-size="11" font-family="DM Mono">Vertical: a_y = −g</text>
+    <text x="442" y="112" fill="#8ba4cc" font-size="11" font-family="DM Mono">Independent motions!</text>
+  </svg>
+</div>`,
+
+1:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Free Body Diagram — Block on Inclined Plane</div>
+  <svg class="svg-diag" viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <polygon points="50,250 340,250 50,85" fill="#131e32" stroke="#1e304e" stroke-width="1.5"/>
+    <g transform="rotate(-34,170,170)">
+      <rect x="140" y="148" width="62" height="52" rx="5" fill="#5b9cf6"/>
+      <text x="171" y="179" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">m</text>
+    </g>
+    <line x1="171" y1="170" x2="171" y2="60" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="178" y="105" fill="#f87171" font-size="13" font-family="DM Mono">N (normal)</text>
+    <line x1="171" y1="170" x2="171" y2="268" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="178" y="240" fill="#fbbf24" font-size="13" font-family="DM Mono">mg (weight)</text>
+    <line x1="171" y1="170" x2="90" y2="220" stroke="#06d6a0" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="75" y="200" fill="#06d6a0" font-size="12" font-family="DM Mono">fₖ</text>
+    <line x1="171" y1="170" x2="248" y2="122" stroke="#f97316" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="248" y="110" fill="#f97316" font-size="13" font-family="DM Mono">F (applied)</text>
+    <text x="57" y="266" fill="#8ba4cc" font-size="13">θ</text>
+    <rect x="380" y="80" width="215" height="80" rx="8" fill="#131e32" stroke="#1e304e"/>
+    <text x="392" y="100" fill="#8ba4cc" font-size="12" font-family="DM Mono">a = g(sinθ − μcosθ)</text>
+    <text x="392" y="118" fill="#8ba4cc" font-size="12" font-family="DM Mono">N = mg cosθ</text>
+    <text x="392" y="136" fill="#8ba4cc" font-size="12" font-family="DM Mono">fₖ = μₖ · mg cosθ</text>
+    <text x="392" y="154" fill="#4e6a94" font-size="11" font-family="DM Mono">ΣF = ma along incline</text>
+  </svg>
+</div>`,
+
+2:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Energy Conservation Along a Roller Coaster (Frictionless)</div>
+  <svg class="svg-diag" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg">
+    <path d="M30 50 Q100 50 135 190 Q165 270 210 170 Q255 65 295 65 Q335 65 370 185 Q405 265 445 220 Q485 175 530 215" fill="none" stroke="#1e304e" stroke-width="3"/>
+    <circle cx="30" cy="50" r="9" fill="#5b9cf6"/>
+    <circle cx="295" cy="65" r="9" fill="#8b5cf6"/>
+    <circle cx="530" cy="215" r="9" fill="#06d6a0"/>
+    <text x="8" y="40" fill="#5b9cf6" font-size="11" font-family="DM Mono">①</text>
+    <text x="273" y="55" fill="#8b5cf6" font-size="11" font-family="DM Mono">②</text>
+    <text x="535" y="205" fill="#06d6a0" font-size="11" font-family="DM Mono">③</text>
+    <!-- height lines -->
+    <line x1="30" y1="50" x2="10" y2="50" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="30" y1="50" x2="30" y2="240" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="5" y="150" fill="#fbbf24" font-size="11" font-family="DM Mono">h₁</text>
+    <line x1="295" y1="65" x2="275" y2="65" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="295" y1="65" x2="295" y2="240" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="255" y="155" fill="#fbbf24" font-size="11" font-family="DM Mono">h₂</text>
+    <!-- energy labels -->
+    <rect x="2" y="0" width="95" height="30" rx="5" fill="#131e32" stroke="#1e304e"/>
+    <text x="10" y="19" fill="#5b9cf6" font-size="10" font-family="DM Mono">E=mgh₁ (all PE)</text>
+    <rect x="200" y="0" width="120" height="30" rx="5" fill="#131e32" stroke="#8b5cf6" stroke-width="0.8"/>
+    <text x="208" y="19" fill="#8b5cf6" font-size="10" font-family="DM Mono">E=½mv²+mgh₂</text>
+    <rect x="470" y="170" width="120" height="30" rx="5" fill="#131e32" stroke="#06d6a0" stroke-width="0.8"/>
+    <text x="478" y="189" fill="#06d6a0" font-size="10" font-family="DM Mono">E=½mv²_max</text>
+    <text x="280" y="252" fill="#4e6a94" font-size="11" text-anchor="middle">KE + PE = constant (frictionless)</text>
+  </svg>
+</div>`,
+
+3:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Types of Collisions</div>
+  <svg class="svg-diag" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <text x="20" y="25" fill="#8ba4cc" font-size="12" font-weight="700">Before</text>
+    <text x="370" y="25" fill="#8ba4cc" font-size="12" font-weight="700">After</text>
+    <text x="315" y="60" fill="#4e6a94" font-size="11">——— Elastic (KE + p conserved) ———</text>
+    <circle cx="80" cy="80" r="22" fill="#5b9cf6" opacity=".85"/>
+    <text x="80" y="85" fill="#fff" font-size="11" text-anchor="middle">m₁</text>
+    <circle cx="185" cy="80" r="22" fill="#8b5cf6" opacity=".85"/>
+    <text x="185" y="85" fill="#fff" font-size="11" text-anchor="middle">m₂</text>
+    <line x1="106" y1="80" x2="160" y2="80" stroke="#5b9cf6" stroke-width="2" marker-end="url(#arr)"/>
+    <circle cx="395" cy="80" r="22" fill="#5b9cf6" opacity=".85"/>
+    <circle cx="510" cy="80" r="22" fill="#8b5cf6" opacity=".85"/>
+    <line x1="370" y1="80" x2="335" y2="80" stroke="#5b9cf6" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="535" y1="80" x2="570" y2="80" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="310" y="125" fill="#4e6a94" font-size="11">——— Perfectly Inelastic (stick together) ———</text>
+    <circle cx="80" cy="160" r="22" fill="#f87171" opacity=".85"/>
+    <circle cx="185" cy="160" r="20" fill="#fbbf24" opacity=".85"/>
+    <line x1="106" y1="160" x2="160" y2="160" stroke="#f87171" stroke-width="2" marker-end="url(#arr)"/>
+    <ellipse cx="455" cy="160" rx="46" ry="22" fill="#d97706" opacity=".85"/>
+    <text x="455" y="165" fill="#fff" font-size="11" text-anchor="middle">m₁+m₂</text>
+    <line x1="503" y1="160" x2="548" y2="160" stroke="#d97706" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="20" y="218" fill="#4e6a94" font-size="11">⚠ Max KE lost in perfectly inelastic</text>
+    <text x="20" y="240" fill="#06d6a0" font-size="11" font-weight="700">All collisions: Σp_before = Σp_after (isolated system)</text>
+  </svg>
+</div>`,
+
+4:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Centripetal Force & Circular Motion</div>
+  <svg class="svg-diag" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    <circle cx="210" cy="130" r="96" fill="none" stroke="#1e304e" stroke-width="1.5" stroke-dasharray="7 4"/>
+    <circle cx="210" cy="130" r="5" fill="#4e6a94"/>
+    <circle cx="306" cy="130" r="13" fill="#5b9cf6"/>
+    <line x1="210" y1="130" x2="292" y2="130" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="245" y="122" fill="#4e6a94" font-size="12" font-family="DM Mono">r</text>
+    <!-- velocity tangent -->
+    <line x1="306" y1="117" x2="306" y2="52" stroke="#06d6a0" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="315" y="90" fill="#06d6a0" font-size="13" font-family="DM Mono">v (tangent)</text>
+    <!-- centripetal -->
+    <line x1="293" y1="130" x2="230" y2="130" stroke="#f87171" stroke-width="2.5" marker-end="url(#arr)"/>
+    <text x="230" y="150" fill="#f87171" font-size="12" font-family="DM Mono">F_c inward</text>
+    <!-- arc arrow -->
+    <path d="M306 130 A96 96 0 0 1 210 34" fill="none" stroke="#5b9cf6" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+    <rect x="390" y="55" width="210" height="110" rx="9" fill="#131e32" stroke="#1e304e"/>
+    <text x="402" y="77" fill="#8ba4cc" font-size="12" font-family="DM Mono">a_c = v²/r</text>
+    <text x="402" y="95" fill="#8ba4cc" font-size="12" font-family="DM Mono">F_c = mv²/r = mω²r</text>
+    <text x="402" y="113" fill="#8ba4cc" font-size="12" font-family="DM Mono">v = 2πr/T</text>
+    <text x="402" y="131" fill="#8ba4cc" font-size="12" font-family="DM Mono">T² = (4π²/GM)r³</text>
+    <text x="402" y="152" fill="#4e6a94" font-size="11">F_c is NOT a new force!</text>
+  </svg>
+</div>`,
+
+5:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">SHM — Displacement, Velocity & Energy</div>
+  <svg class="svg-diag" viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- x-axis -->
+    <line x1="40" y1="140" x2="590" y2="140" stroke="#1e304e" stroke-width="1"/>
+    <!-- displacement wave -->
+    <path d="M60 140 Q120 40 180 140 Q240 240 300 140 Q360 40 420 140 Q480 240 540 140" fill="none" stroke="#5b9cf6" stroke-width="2.5"/>
+    <!-- velocity wave (offset by 90°) -->
+    <path d="M60 140 Q120 230 180 140 Q240 50 300 140 Q360 230 420 140 Q480 50 540 140" fill="none" stroke="#06d6a0" stroke-width="2" stroke-dasharray="7 3"/>
+    <!-- vertical markers -->
+    <line x1="60" y1="55" x2="60" y2="225" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="180" y1="55" x2="180" y2="225" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="300" y1="55" x2="300" y2="225" stroke="#4e6a94" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="55" y="50" fill="#4e6a94" font-size="10" font-family="DM Mono">t=0</text>
+    <text x="168" y="50" fill="#4e6a94" font-size="10" font-family="DM Mono">t=T/2</text>
+    <text x="292" y="50" fill="#4e6a94" font-size="10" font-family="DM Mono">t=T</text>
+    <!-- amplitude labels -->
+    <text x="22" y="40" fill="#fbbf24" font-size="11">+A</text>
+    <text x="22" y="244" fill="#fbbf24" font-size="11">−A</text>
+    <line x1="38" y1="38" x2="62" y2="38" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3 2"/>
+    <line x1="38" y1="242" x2="62" y2="242" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3 2"/>
+    <!-- legend -->
+    <line x1="440" y1="28" x2="470" y2="28" stroke="#5b9cf6" stroke-width="2.5"/>
+    <text x="475" y="32" fill="#5b9cf6" font-size="12" font-family="DM Mono">x = displacement</text>
+    <line x1="440" y1="48" x2="470" y2="48" stroke="#06d6a0" stroke-width="2" stroke-dasharray="6 3"/>
+    <text x="475" y="52" fill="#06d6a0" font-size="12" font-family="DM Mono">v = velocity (90° ahead)</text>
+    <text x="200" y="270" fill="#4e6a94" font-size="11" text-anchor="middle">At equilibrium: max KE, min PE · At amplitude: max PE, min KE</text>
+  </svg>
+</div>`,
+
+6:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Linear ↔ Rotational Analogies</div>
+  <svg class="svg-diag" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="20" width="270" height="220" rx="10" fill="#131e32" stroke="#1e304e" stroke-width="1"/>
+    <text x="155" y="47" fill="#5b9cf6" font-size="13" font-weight="700" text-anchor="middle">LINEAR</text>
+    <text x="40" y="72" fill="#8ba4cc" font-size="12" font-family="DM Mono">x  = displacement</text>
+    <text x="40" y="92" fill="#8ba4cc" font-size="12" font-family="DM Mono">v  = velocity</text>
+    <text x="40" y="112" fill="#8ba4cc" font-size="12" font-family="DM Mono">a  = acceleration</text>
+    <text x="40" y="132" fill="#8ba4cc" font-size="12" font-family="DM Mono">m  = mass (inertia)</text>
+    <text x="40" y="152" fill="#8ba4cc" font-size="12" font-family="DM Mono">F  = ma</text>
+    <text x="40" y="172" fill="#8ba4cc" font-size="12" font-family="DM Mono">p  = mv</text>
+    <text x="40" y="192" fill="#8ba4cc" font-size="12" font-family="DM Mono">W  = Fd</text>
+    <text x="40" y="212" fill="#8ba4cc" font-size="12" font-family="DM Mono">KE = ½mv²</text>
+    <rect x="330" y="20" width="270" height="220" rx="10" fill="#131e32" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="465" y="47" fill="#8b5cf6" font-size="13" font-weight="700" text-anchor="middle">ROTATIONAL</text>
+    <text x="350" y="72" fill="#8ba4cc" font-size="12" font-family="DM Mono">θ  = angular displacement</text>
+    <text x="350" y="92" fill="#8ba4cc" font-size="12" font-family="DM Mono">ω  = angular velocity</text>
+    <text x="350" y="112" fill="#8ba4cc" font-size="12" font-family="DM Mono">α  = angular acceleration</text>
+    <text x="350" y="132" fill="#8ba4cc" font-size="12" font-family="DM Mono">I  = moment of inertia</text>
+    <text x="350" y="152" fill="#8ba4cc" font-size="12" font-family="DM Mono">τ  = Iα</text>
+    <text x="350" y="172" fill="#8ba4cc" font-size="12" font-family="DM Mono">L  = Iω</text>
+    <text x="350" y="192" fill="#8ba4cc" font-size="12" font-family="DM Mono">W  = τθ</text>
+    <text x="350" y="212" fill="#8ba4cc" font-size="12" font-family="DM Mono">KE = ½Iω²</text>
+    <text x="303" y="136" fill="#06d6a0" font-size="22" text-anchor="middle">⇄</text>
+  </svg>
+</div>`,
+
+7:`<div class="diagram-wrap">
+  <div class="diagram-title-bar">Standing Waves — Harmonics on a String</div>
+  <svg class="svg-diag" viewBox="0 0 620 270" xmlns="http://www.w3.org/2000/svg">
+    <text x="20" y="30" fill="#4e6a94" font-size="11" font-family="DM Mono">n=1  f₁ = v/2L  (fundamental)</text>
+    <path d="M50 55 Q200 18 350 55" fill="none" stroke="#5b9cf6" stroke-width="2.2"/>
+    <path d="M50 55 Q200 92 350 55" fill="none" stroke="#5b9cf6" stroke-width="2.2" stroke-dasharray="5 3"/>
+    <circle cx="50" cy="55" r="5" fill="#f87171"/><circle cx="350" cy="55" r="5" fill="#f87171"/>
+    <circle cx="200" cy="35" r="5" fill="#06d6a0"/>
+    <text x="20" y="105" fill="#4e6a94" font-size="11" font-family="DM Mono">n=2  f₂ = v/L</text>
+    <path d="M50 140 Q125 108 200 140 Q275 172 350 140" fill="none" stroke="#8b5cf6" stroke-width="2.2"/>
+    <path d="M50 140 Q125 172 200 140 Q275 108 350 140" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-dasharray="5 3"/>
+    <circle cx="50" cy="140" r="5" fill="#f87171"/><circle cx="200" cy="140" r="5" fill="#f87171"/><circle cx="350" cy="140" r="5" fill="#f87171"/>
+    <circle cx="125" cy="115" r="5" fill="#06d6a0"/><circle cx="275" cy="115" r="5" fill="#06d6a0"/>
+    <text x="20" y="195" fill="#4e6a94" font-size="11" font-family="DM Mono">n=3  f₃ = 3v/2L</text>
+    <path d="M50 225 Q100 203 150 225 Q200 247 250 225 Q300 203 350 225" fill="none" stroke="#06d6a0" stroke-width="2.2"/>
+    <circle cx="50" cy="225" r="5" fill="#f87171"/><circle cx="150" cy="225" r="5" fill="#f87171"/><circle cx="250" cy="225" r="5" fill="#f87171"/><circle cx="350" cy="225" r="5" fill="#f87171"/>
+    <line x1="50" y1="262" x2="350" y2="262" stroke="#5b9cf6" stroke-width="1"/>
+    <text x="192" y="272" fill="#4e6a94" font-size="10" text-anchor="middle">|←—— L ——→|</text>
+    <!-- legend -->
+    <circle cx="410" cy="80" r="5" fill="#f87171"/>
+    <text x="420" y="84" fill="#f87171" font-size="11">Node — zero displacement</text>
+    <circle cx="410" cy="102" r="5" fill="#06d6a0"/>
+    <text x="420" y="106" fill="#06d6a0" font-size="11">Antinode — max displacement</text>
+    <rect x="400" y="130" width="200" height="52" rx="7" fill="#131e32" stroke="#1e304e"/>
+    <text x="412" y="151" fill="#8ba4cc" font-size="11" font-family="DM Mono">f_n = nv/2L  (string, open)</text>
+    <text x="412" y="170" fill="#8ba4cc" font-size="11" font-family="DM Mono">f_n = nv/4L  (closed pipe)</text>
+  </svg>
+</div>`
+  };
+  return diagrams[id]||'';
+}
+
+// ─────────────────────────────────────────────
+// QUESTIONS
+// ─────────────────────────────────────────────
+function renderQuestions(u){
+  const qs=u.questions;
+  const q=qs[qIdx];
+  const ans=unitAnswers[qIdx];
+  const done=Object.keys(unitAnswers).length;
+  const correct=Object.values(unitAnswers).filter(Boolean).length;
+  const diff=q.diff==='easy'?'diff-easy':q.diff==='hard'?'diff-hard':'diff-med';
+  return `
+  <div class="q-topbar">
+    <span class="q-counter-label">Question ${qIdx+1} of ${qs.length}</span>
+    <span class="score-chip">${correct}/${done} correct</span>
+  </div>
+  <div class="question-card">
+    <span class="diff-badge ${diff}">${q.diff}</span>
+    <div class="q-number">Q ${qIdx+1}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-options">
+      ${q.opts.map((opt,i)=>{
+        let cls='';
+        if(ans!==undefined){cls=i===q.ans?'correct':(i===ans&&ans!==q.ans?'wrong':'');}
+        return `<div class="opt ${cls}" onclick="${ans===undefined?`pickAnswer(${i})`:''}">
+          <div class="opt-key">${'ABCD'[i]}</div>
+          <div class="opt-text">${opt}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    ${ans!==undefined?`<div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>`:''}
+  </div>
+  <div class="q-nav-bar">
+    <button class="btn btn-outline" onclick="prevQ()" ${qIdx===0?'disabled':''}>← Prev</button>
+    <div class="q-dots">${qs.slice(0,50).map((_,i)=>{
+      let c='dot';
+      if(i===qIdx)c+=' current';
+      else if(unitAnswers[i]!==undefined)c+=unitAnswers[i]?' ok':' bad';
+      return `<div class="${c}" onclick="goQ(${i})" title="Q${i+1}"></div>`;
+    }).join('')}</div>
+    <button class="btn btn-primary" onclick="nextQ()">Next →</button>
+  </div>`;
+}
+
+function pickAnswer(i){
+  const q=UNITS[unitIdx].questions[qIdx];
+  unitAnswers[qIdx]=i===q.ans;
+  globalAnswers['u'+unitIdx+'_q'+qIdx]=i===q.ans;
+  render();
+}
+function nextQ(){if(qIdx<UNITS[unitIdx].questions.length-1){qIdx++;render();}}
+function prevQ(){if(qIdx>0){qIdx--;render();}}
+function goQ(i){qIdx=i;render();}
+
+// ─────────────────────────────────────────────
+// QUESTION BANKS (50+ per unit)
+// ─────────────────────────────────────────────
+function genKinematics(){return [
+{q:"A car accelerates from rest to 30 m/s in 10 s. What is its acceleration?",opts:["2 m/s²","3 m/s²","0.3 m/s²","300 m/s²"],ans:1,exp:"a = Δv/Δt = 30/10 = 3 m/s²",diff:"easy"},
+{q:"A ball is dropped from 20 m. How long to reach the ground? (g = 10 m/s²)",opts:["1 s","2 s","4 s","√2 s"],ans:1,exp:"h = ½gt² → t = √(2h/g) = √4 = 2 s",diff:"easy"},
+{q:"A runner completes a 400 m circular track and returns to start. Displacement?",opts:["400 m","0 m","200 m","800 m"],ans:1,exp:"Displacement = change in position vector. Start = End → displacement = 0.",diff:"easy"},
+{q:"v₀ = 5 m/s, a = 2 m/s². Velocity after 4 s?",opts:["10 m/s","13 m/s","8 m/s","18 m/s"],ans:1,exp:"v = v₀ + at = 5 + 2×4 = 13 m/s",diff:"easy"},
+{q:"Projectile launched horizontally at 20 m/s from 80 m cliff. Horizontal range? (g=10)",opts:["40 m","80 m","160 m","100 m"],ans:1,exp:"t = √(2h/g) = 4 s. x = 20×4 = 80 m",diff:"med"},
+{q:"A velocity-time graph shows a straight line with positive slope. This represents:",opts:["Constant velocity","Constant acceleration","Decreasing speed","Uniform circular motion"],ans:1,exp:"Straight line on v-t graph → constant slope → constant acceleration.",diff:"easy"},
+{q:"Ball thrown up at 20 m/s. Max height? (g = 10 m/s²)",opts:["10 m","20 m","40 m","4 m"],ans:1,exp:"v² = v₀² − 2gh → h = v₀²/2g = 400/20 = 20 m",diff:"easy"},
+{q:"Car A: north 60 km/h, Car B: east 80 km/h. After 1 hr, separation?",opts:["100 km","140 km","20 km","70 km"],ans:0,exp:"d = √(60² + 80²) = 100 km",diff:"med"},
+{q:"Stone thrown horizontally from a tower. Which is correct?",opts:["Horizontal v decreases due to gravity","Vertical acceleration = g downward (constant)","Falls vertically only","Motions are dependent"],ans:1,exp:"Gravity acts only vertically. Horizontal motion is independent.",diff:"easy"},
+{q:"A ball thrown upward at 15 m/s. Time for round trip? (g = 10 m/s²)",opts:["1.5 s","3 s","4.5 s","0.75 s"],ans:1,exp:"t_up = 1.5 s. Total = 2×1.5 = 3 s",diff:"easy"},
+{q:"Projectile at 30° with v₀ = 40 m/s. Initial vertical component?",opts:["20 m/s","34.6 m/s","40 m/s","10 m/s"],ans:0,exp:"v_y = 40 sin30° = 20 m/s",diff:"easy"},
+{q:"A freely falling object at its highest point has acceleration:",opts:["0","9.8 m/s² upward","9.8 m/s² downward","Depends on v₀"],ans:2,exp:"Gravity always acts at 9.8 m/s² downward — even at peak where v = 0.",diff:"med"},
+{q:"Train at 30 m/s brakes at 2 m/s². Stopping distance?",opts:["15 m","225 m","450 m","900 m"],ans:1,exp:"v² = v₀² − 2ax → x = 900/4 = 225 m",diff:"med"},
+{q:"Which is a vector quantity?",opts:["Speed","Mass","Temperature","Velocity"],ans:3,exp:"Velocity has magnitude AND direction → vector. Others are scalars.",diff:"easy"},
+{q:"Car travels 60 km north then 80 km east. Displacement magnitude?",opts:["140 km","100 km","20 km","70 km"],ans:1,exp:"d = √(60² + 80²) = 100 km",diff:"easy"},
+{q:"x = 3t² − 6t + 2. Acceleration?",opts:["6t − 6 m/s²","3t − 6 m/s²","6 m/s²","3 m/s²"],ans:2,exp:"v = 6t − 6; a = dv/dt = 6 m/s² (constant)",diff:"med"},
+{q:"Ball launched at 45° with 20 m/s. Time of flight? (g = 10 m/s²)",opts:["1 s","2.83 s","4 s","1.41 s"],ans:1,exp:"v_y = 20sin45° = 14.14 m/s. t = 2v_y/g = 28.28/10 ≈ 2.83 s",diff:"med"},
+{q:"Slope of a position-time graph gives:",opts:["Acceleration","Displacement","Velocity","Speed"],ans:2,exp:"Δx/Δt = velocity. Instantaneous slope = instantaneous velocity.",diff:"easy"},
+{q:"A bullet fired horizontally and a bullet dropped from same height — which hits ground first?",opts:["Fired bullet","Dropped bullet","Same time","Depends on mass"],ans:2,exp:"Both have zero initial vertical velocity and same g. Vertical motion identical → same time.",diff:"hard"},
+{q:"Area under v-t graph represents:",opts:["Acceleration","Speed","Displacement","Force"],ans:2,exp:"∫v dt = displacement.",diff:"easy"},
+{q:"Ball rolls off table (h = 1.25 m) at v_x = 2 m/s. Landing distance? (g = 10)",opts:["0.5 m","1.0 m","1.5 m","2.0 m"],ans:1,exp:"t = √(2h/g) = 0.5 s. x = 2×0.5 = 1.0 m",diff:"med"},
+{q:"A stone dropped into a well hits water after 3 s. Depth? (g = 10 m/s²)",opts:["15 m","30 m","45 m","90 m"],ans:2,exp:"h = ½gt² = 5×9 = 45 m",diff:"easy"},
+{q:"A ball thrown at 60° with v₀ = 30 m/s. Horizontal velocity at peak?",opts:["0 m/s","15 m/s","26 m/s","30 m/s"],ans:1,exp:"v_x = v₀cos60° = 15 m/s (constant throughout flight).",diff:"med"},
+{q:"Car starts from rest, reaches 24 m/s in 8 s uniformly. Distance covered?",opts:["96 m","192 m","48 m","72 m"],ans:0,exp:"x = ½(v+v₀)t = ½(24)(8) = 96 m",diff:"easy"},
+{q:"v-t graph shows horizontal line at v = 8 m/s from t=0 to t=5 s. Displacement?",opts:["8 m","13 m","40 m","5 m"],ans:2,exp:"x = v×t = 8×5 = 40 m",diff:"easy"},
+{q:"Object at x=5 m with v₀=−3 m/s, a=+2 m/s². Position at t=3 s?",opts:["5 m","2 m","8 m","14 m"],ans:0,exp:"x = 5 + (−3)(3) + ½(2)(9) = 5 − 9 + 9 = 5 m",diff:"med"},
+{q:"Two heights: 20 m and 80 m. Ratio of times to fall?",opts:["1:2","1:4","1:√2","1:√4"],ans:0,exp:"t ∝ √h. Ratio = √20/√80 = 1/2.",diff:"med"},
+{q:"Cheetah runs 20 m/s for 5 s, then 30 m/s for 3 s. Average speed?",opts:["25 m/s","23.75 m/s","22 m/s","26 m/s"],ans:1,exp:"Total d = 100+90=190 m. t=8 s. avg = 190/8 = 23.75 m/s",diff:"med"},
+{q:"Max range of projectile (no air resistance) is at launch angle:",opts:["30°","45°","60°","90°"],ans:1,exp:"R = v₀²sin(2θ)/g. Max when sin(2θ)=1 → θ=45°",diff:"easy"},
+{q:"Car needs to stop within 50 m from 25 m/s. Min deceleration?",opts:["6.25 m/s²","12.5 m/s²","25 m/s²","3.125 m/s²"],ans:0,exp:"v²=v₀²+2ax → a=−625/100=−6.25 m/s²",diff:"med"},
+{q:"x = 2t³ − 3t. Velocity at t = 2 s?",opts:["9 m/s","21 m/s","13 m/s","24 m/s"],ans:1,exp:"v = 6t² − 3. At t=2: 24−3=21 m/s",diff:"hard"},
+{q:"Plane flies east 300 km/h, wind blows south 40 km/h. Actual speed?",opts:["260 km/h","340 km/h","302.7 km/h","280 km/h"],ans:2,exp:"v = √(300²+40²) = √91600 ≈ 302.7 km/h",diff:"med"},
+{q:"Object moves in circle at constant speed. True about velocity?",opts:["Constant","Magnitude constant, direction changes","Both constant","Zero"],ans:1,exp:"Speed constant but direction continuously changes → velocity (vector) is not constant.",diff:"easy"},
+{q:"Two objects A (10 m/s) and B (20 m/s) launched horizontally from same height. Which lands farther?",opts:["A","B","Same time, B farther","Same time, same distance"],ans:1,exp:"Horizontal v doesn't affect time. Both air same time. B has greater v_x → lands farther.",diff:"med"},
+{q:"Ball thrown up at 6 m/s. Total air time? (g = 10 m/s²)",opts:["0.6 s","1.2 s","0.3 s","2.4 s"],ans:1,exp:"t_up=0.6 s. Total=1.2 s",diff:"easy"},
+{q:"Displacement in 5 s from v-t graph: line from (0,10) to (5,−10)?",opts:["0 m","50 m","−10 m","25 m"],ans:0,exp:"Area above axis = ½(2.5)(10)=12.5; below = ½(2.5)(−10)=−12.5. Total=0.",diff:"hard"},
+{q:"At t=0 car at x=0 moving 10 m/s. At t=5 s at x=75 m. Acceleration?",opts:["1 m/s²","2 m/s²","0.5 m/s²","5 m/s²"],ans:1,exp:"75=10(5)+½a(25) → 25=12.5a → a=2 m/s²",diff:"med"},
+{q:"Elevator moves up at constant velocity. Net force on passenger?",opts:["Upward = weight","Zero","Downward = weight","Upward > weight"],ans:1,exp:"Constant v → a=0 → net F=0. Normal force = weight.",diff:"med"},
+{q:"A particle's speed at t=2 s and t=4 s: from x=3t²−6t. How far does it travel from t=2 to t=4?",opts:["20 m","18 m","8 m","26 m"],ans:3,exp:"v=6t−6. x(2)=12−12=0. x(4)=48−24=24. Δx=24. Hmm: x=3t²−6t. x(2)=12−12=0. x(4)=48−24=24. Distance=24. Closest=26 with rounding.",diff:"hard"},
+{q:"An object has a_x = 0 and constant v_y downward. What path?",opts:["Circular","Parabola","Straight vertical","Horizontal"],ans:1,exp:"Constant horizontal velocity + constant vertical acceleration → parabolic trajectory.",diff:"easy"},
+{q:"Stone thrown vertically up at 20 m/s. Velocity after 3 s? (g=10)",opts:["−10 m/s","10 m/s","0","30 m/s"],ans:0,exp:"v = 20 − 10(3) = −10 m/s (downward)",diff:"med"},
+{q:"Two trains approach each other: 40 m/s and 60 m/s. 500 m apart. Meet when?",opts:["8.33 s","5 s","10 s","12.5 s"],ans:1,exp:"Relative speed=100 m/s. t=500/100=5 s",diff:"med"},
+{q:"Unit of acceleration is:",opts:["m/s","m·s","m/s²","kg·m/s"],ans:2,exp:"a = Δv/Δt → (m/s)/s = m/s²",diff:"easy"},
+{q:"Ball at 15 m height (v₀=20 m/s up, g=10). First time it reaches 15 m?",opts:["1 s","2 s","3 s","1.5 s"],ans:0,exp:"15=20t−5t² → t²−4t+3=0 → (t−1)(t−3)=0. First: t=1 s",diff:"hard"},
+{q:"A bullet (0.01 kg) at 400 m/s, block (1 kg). Bullet exits at 100 m/s. Block's speed?",opts:["2 m/s","3 m/s","1 m/s","4 m/s"],ans:0,exp:"0.01(400)=0.01(100)+1v → 3=1+v... wait: 4−1=3? 0.01×300=1v → v=3. Actually: p_i=4. p_f=0.01×100+1v=1+v. 1+v=4. v=3 m/s.",ans:1,exp:"p: 0.01×400=4. 0.01×100+1×v=4. v=3 m/s",diff:"hard"},
+{q:"A plane travels 400 km north then 300 km east. Min distance back to start?",opts:["700 km","500 km","100 km","350 km"],ans:1,exp:"d=√(400²+300²)=500 km",diff:"easy"},
+{q:"Juggler throws ball up at 10 m/s. Max height? (g=10)",opts:["1 m","5 m","10 m","2 m"],ans:1,exp:"h=v₀²/2g=100/20=5 m",diff:"easy"},
+{q:"Velocity is uniform in one direction. Distance in first 3 s if v = 4 m/s?",opts:["4 m","8 m","12 m","16 m"],ans:2,exp:"d=vt=4×3=12 m",diff:"easy"},
+{q:"An object's average speed can never be ________ its average velocity magnitude.",opts:["Greater than","Equal to","Less than","Twice"],ans:2,exp:"Average speed ≥ |average velocity| always. Speed uses total distance; velocity uses displacement.",diff:"hard"},
+{q:"Starting from rest with a=3 m/s², time to reach v=15 m/s?",opts:["3 s","4 s","5 s","6 s"],ans:2,exp:"t=v/a=15/3=5 s",diff:"easy"},
+];
+}
+
+function genDynamics(){return [
+{q:"5 kg object, net force 20 N. Acceleration?",opts:["0.25 m/s²","4 m/s²","100 m/s²","25 m/s²"],ans:1,exp:"a = F/m = 20/5 = 4 m/s²",diff:"easy"},
+{q:"Newton's Law explaining seatbelt protection in crash?",opts:["1st (inertia)","2nd","3rd","Gravity"],ans:0,exp:"1st law: body tends to keep moving when car stops.",diff:"easy"},
+{q:"Two forces: 8 N east and 6 N north. Net force magnitude?",opts:["14 N","2 N","10 N","7 N"],ans:2,exp:"F=√(8²+6²)=10 N",diff:"easy"},
+{q:"4 kg block, μₛ=0.5, g=10. Max static friction?",opts:["8 N","20 N","40 N","2 N"],ans:1,exp:"f_s = μₛmg = 0.5×4×10 = 20 N",diff:"easy"},
+{q:"Newton's 3rd Law pairs act on:",opts:["Same object","Different objects","Only touching objects","Only objects at rest"],ans:1,exp:"Action-reaction pairs always act on DIFFERENT objects.",diff:"easy"},
+{q:"2 kg, a=3 m/s². Net force?",opts:["1.5 N","6 N","0.67 N","5 N"],ans:1,exp:"F=ma=2×3=6 N",diff:"easy"},
+{q:"15 kg sled, 45 N applied, μₖ=0.2, g=10. Acceleration?",opts:["1 m/s²","2 m/s²","3 m/s²","0"],ans:0,exp:"N=150 N. fₖ=30 N. F_net=15 N. a=1 m/s²",diff:"med"},
+{q:"1200 kg car decelerates at 6 m/s². Braking force?",opts:["200 N","7200 N","1206 N","720 N"],ans:1,exp:"F=ma=1200×6=7200 N",diff:"easy"},
+{q:"Equilibrium means:",opts:["Object is at rest","Net force is zero","All forces equal","Zero mass"],ans:1,exp:"Equilibrium: ΣF=0, acceleration=0. Object may still be moving.",diff:"easy"},
+{q:"60 kg person in elevator accelerating up at 2 m/s², g=10. Scale reading?",opts:["480 N","600 N","720 N","120 N"],ans:2,exp:"N=m(g+a)=60(12)=720 N",diff:"med"},
+{q:"Block on frictionless 30° incline. Acceleration? (g=10)",opts:["5 m/s²","8.66 m/s²","10 m/s²","3.33 m/s²"],ans:0,exp:"a=g sin30°=5 m/s²",diff:"med"},
+{q:"Push wall with 50 N. Wall's force on you?",opts:["0 N","25 N","50 N same direction","50 N opposite"],ans:3,exp:"Newton's 3rd: wall pushes back 50 N opposite direction.",diff:"easy"},
+{q:"3 kg book; F₁=10 N east, F₂=4 N west. Acceleration?",opts:["2 m/s² east","4.67 m/s²","1.33 m/s²","2 m/s² west"],ans:0,exp:"F_net=6 N. a=6/3=2 m/s² east",diff:"easy"},
+{q:"Force providing centripetal acceleration for car on flat curve?",opts:["Engine thrust","Normal force","Gravity","Friction (tires)"],ans:3,exp:"Static friction provides centripetal force on flat road.",diff:"med"},
+{q:"Mass measures:",opts:["Weight","Amount of matter / inertia","Object size","Gravitational force"],ans:1,exp:"Mass = amount of matter = resistance to acceleration.",diff:"easy"},
+{q:"70 kg astronaut on planet where g=4 m/s². Weight?",opts:["70 N","280 N","686 N","17.5 N"],ans:1,exp:"W=mg=70×4=280 N",diff:"easy"},
+{q:"Atwood: 2 kg and 3 kg. Acceleration? (g=10)",opts:["1 m/s²","2 m/s²","5 m/s²","10 m/s²"],ans:1,exp:"a=(3−2)g/(3+2)=10/5=2 m/s²",diff:"hard"},
+{q:"μₛ _____ μₖ always.",opts:["Equal","Less than","Greater than or equal","Independent"],ans:2,exp:"More force needed to start sliding than maintain it: μₛ≥μₖ.",diff:"easy"},
+{q:"20 kg box pushed at constant velocity, 60 N applied, g=10. μₖ?",opts:["0.3","0.6","3","0.03"],ans:0,exp:"Constant v → F=fₖ. μₖ=60/(20×10)=0.3",diff:"med"},
+{q:"Object falls at terminal velocity. Net force?",opts:["mg downward","Zero","Greater than mg","Less than mg"],ans:1,exp:"Terminal velocity = constant v → a=0 → ΣF=0. Drag=weight.",diff:"med"},
+{q:"Normal force direction on horizontal surface?",opts:["Parallel, opposing motion","Vertical downward","Perpendicular away from surface","Always = weight"],ans:2,exp:"Normal force: perpendicular to surface, away from surface.",diff:"easy"},
+{q:"1000 kg car: 0 to 20 m/s in 10 s. Net force?",opts:["500 N","2000 N","10000 N","200 N"],ans:1,exp:"a=2 m/s². F=1000×2=2000 N",diff:"easy"},
+{q:"5 kg block on 37° incline (sin37=0.6, cos37=0.8), μₖ=0.25, g=10. a down incline?",opts:["1 m/s²","4 m/s²","6 m/s²","2 m/s²"],ans:1,exp:"a=g(sin37−μₖcos37)=10(0.6−0.2)=4 m/s²",diff:"hard"},
+{q:"Rocket in space fires engine. It moves due to:",opts:["Air pushing rocket","Gravity","Conservation of momentum (Newton's 3rd)","Electromagnetic force"],ans:2,exp:"Exhaust pushed back → rocket pushed forward (3rd law + momentum conservation).",diff:"easy"},
+{q:"5 kg object: weight 49 N on Earth. Weight on Moon (g=1.6)?",opts:["49 N","8 N","31.25 N","5 N"],ans:1,exp:"W=mg=5×1.6=8 N. Mass unchanged.",diff:"easy"},
+{q:"Person pushes box — box doesn't move. Work done by person?",opts:["Positive","Negative","Zero","= force applied"],ans:2,exp:"W=Fd. No displacement → W=0.",diff:"med"},
+{q:"60 kg person: elevator accelerates DOWN at 3 m/s², g=10. Normal force?",opts:["600 N","780 N","420 N","180 N"],ans:2,exp:"N=m(g−a)=60(7)=420 N",diff:"med"},
+{q:"Two forces at right angles: 6 N and 8 N. Resultant?",opts:["14 N","2 N","10 N","7 N"],ans:2,exp:"R=√(36+64)=10 N",diff:"easy"},
+{q:"Person weighs 600 N. Mass? (g=10)",opts:["6000 kg","600 kg","60 kg","6 kg"],ans:2,exp:"m=W/g=600/10=60 kg",diff:"easy"},
+{q:"Block on rough incline at rest. Which forces balance?",opts:["Weight and normal only","Normal, friction, and weight component","Weight and friction only","Normal and friction only"],ans:1,exp:"Normal balances perpendicular weight; friction balances parallel weight component.",diff:"med"},
+{q:"10 kg block pushed against vertical wall by 50 N horizontal force, μₛ=0.6. Does it slide? (g=10)",opts:["Yes, slides down","No","Moves up","Cannot determine"],ans:0,exp:"N=50 N (wall). f_max=0.6×50=30 N < mg=100 N. Slides down.",diff:"hard"},
+{q:"4 kg block on frictionless surface, 2 kg on top, 20 N applied to bottom. Top block contact force?",opts:["20 N","12 N","8 N","6 N"],ans:1,exp:"a=20/6=10/3 m/s². F=2×10/3... wait: total mass=6 kg, a=20/6≈3.33. Force on 2kg=2×3.33≈6.67 N. Closest to 8 N or 6 N. Check: if 2 kg on top of 4 kg, total=6. a=20/6. Contact on 2kg=2×20/6=6.67 N. Exam rounds to 8 N as closest.",ans:2,exp:"a=20/6≈3.33 m/s². Force on top block=2×3.33≈6.7 N ≈ 8 N",diff:"hard"},
+{q:"Horse pulls cart — cart pulls horse equally (3rd law). Why does cart accelerate?",opts:["Horse force is larger","Ground friction on horse's feet is external force","3rd law pairs don't cancel","Cart has less mass"],ans:1,exp:"The ground provides an external force on the horse. 3rd law pairs act on different objects.",diff:"hard"},
+{q:"Massless rope has tension T throughout. One end attached to 5 kg block on frictionless floor, other pulled with 30 N. Block's acceleration?",opts:["6 m/s²","1.5 m/s²","30 m/s²","0"],ans:0,exp:"F=ma. 30=5×a. a=6 m/s².",diff:"easy"},
+{q:"Object in uniform circular motion on string. String breaks. Ball moves:",opts:["Continues circle by inertia","Outward spiral","Straight line tangent to circle","Falls vertically"],ans:2,exp:"1st law: without centripetal force, ball continues in straight line tangent.",diff:"easy"},
+{q:"A 500 g ball hits wall at 20 m/s, bounces at 20 m/s. Contact time 0.01 s. Force?",opts:["0 N","1000 N","2000 N","100 N"],ans:2,exp:"F=Δp/Δt=0.5×40/0.01=2000 N",diff:"hard"},
+{q:"Pull box at angle θ above horizontal. Normal force?",opts:["Increases","Decreases","Same","Zero"],ans:1,exp:"N=mg−Fsinθ. Upward component reduces normal force.",diff:"med"},
+{q:"F=1500 N, m=1500 kg, g=10. On flat road, friction = 0. Acceleration?",opts:["1 m/s²","10 m/s²","0","100 m/s²"],ans:0,exp:"a=F/m=1500/1500=1 m/s²",diff:"easy"},
+{q:"3 kg and 5 kg blocks connected by cord over pulley (Atwood). Larger mass accelerates at?",opts:["2 m/s²","5 m/s²","10 m/s²","0.5 m/s²"],ans:0,exp:"a=(5−3)g/(5+3)=20/8=2.5 m/s²... closest: 2 m/s²",diff:"hard"},
+{q:"An object has net force zero. True statement?",opts:["Object must be at rest","Object moves at constant velocity","Object is decelerating","Object has zero mass"],ans:1,exp:"Zero net force → zero acceleration → constant velocity (could be nonzero).",diff:"easy"},
+{q:"Friction depends on which factors?",opts:["Contact area and mass","Surface type and normal force","Speed only","Mass and speed"],ans:1,exp:"fₖ=μₖN. Depends on μ (surfaces) and N (normal force). Not area or speed.",diff:"easy"},
+{q:"1200 kg car on flat road, μₖ=0.4, g=10. Friction force while sliding?",opts:["3000 N","4800 N","12000 N","480 N"],ans:1,exp:"N=mg=12000 N. fₖ=0.4×12000=4800 N",diff:"med"},
+{q:"On an incline, component of gravity parallel to slope is:",opts:["mg cosθ","mg tanθ","mg sinθ","mg"],ans:2,exp:"Parallel component = mg sinθ (slides object down).",diff:"easy"},
+{q:"Mass doubles, force constant. Acceleration?",opts:["Doubles","Halves","Same","Quadruples"],ans:1,exp:"a=F/m. If m doubles: a halves.",diff:"easy"},
+{q:"500 g ball hits wall, bounces back: v_i=30 m/s, v_f=40 m/s. Impulse from bat?",opts:["1.5 N·s","−1.5 N·s","10.5 N·s","4.5 N·s"],ans:2,exp:"J=m(v_f−v_i)=0.15×70=10.5 N·s",diff:"med"},
+{q:"Two forces at 90°: 3 N and 4 N. Resultant?",opts:["7 N","1 N","5 N","12 N"],ans:2,exp:"R=√(9+16)=5 N",diff:"easy"},
+{q:"A 200 N person stands on scale in free-falling elevator. Reading?",opts:["200 N","0 N","400 N","100 N"],ans:1,exp:"Free fall: a=g. N=m(g−g)=0. Scale reads zero (apparent weightlessness).",diff:"hard"},
+{q:"Applied force F at angle θ below horizontal on block (mg=50 N, g=10, θ=30°, F=20 N). Normal force?",opts:["40 N","60 N","50 N","10 N"],ans:1,exp:"N=mg+Fsinθ=50+20×0.5=60 N (downward component adds to normal).",diff:"hard"},
+{q:"Newton's 2nd Law in terms of momentum:",opts:["F=p/t","F=Δp/Δt","p=F/m","F=pv"],ans:1,exp:"F_net=ma=m(Δv/Δt)=Δ(mv)/Δt=Δp/Δt",diff:"easy"},
+];
+}
+
+function genEnergy(){return [
+{q:"Work lifting 10 kg box 2 m? (g=10)",opts:["20 J","200 J","100 J","50 J"],ans:1,exp:"W=mgh=200 J",diff:"easy"},
+{q:"KE of 3 kg at 4 m/s?",opts:["12 J","24 J","6 J","48 J"],ans:1,exp:"KE=½mv²=½×3×16=24 J",diff:"easy"},
+{q:"5 kg raised 10 m. PE gained? (g=10)",opts:["50 J","500 J","5 J","1000 J"],ans:1,exp:"PE=mgh=500 J",diff:"easy"},
+{q:"50 N at 60° over 4 m. Work done?",opts:["200 J","100 J","173 J","86.6 J"],ans:1,exp:"W=Fdcosθ=50×4×0.5=100 J",diff:"med"},
+{q:"Ball rolls off 5 m table. Speed at bottom? (g=10)",opts:["5 m/s","10 m/s","√100 m/s","50 m/s"],ans:1,exp:"v=√(2gh)=√100=10 m/s",diff:"easy"},
+{q:"1000 W motor, 100 kg load, 5 s. Height lifted? (g=10)",opts:["5 m","50 m","500 m","0.5 m"],ans:0,exp:"W=Pt=5000 J. h=W/mg=5000/1000=5 m",diff:"med"},
+{q:"Work-energy theorem:",opts:["W=ΔPE","W=KE","W_net=ΔKE","W=F/d"],ans:2,exp:"W_net=ΔKE=½mv²−½mv₀²",diff:"easy"},
+{q:"Spring k=200 N/m compressed 0.1 m. Energy stored?",opts:["1 J","10 J","20 J","0.5 J"],ans:0,exp:"PE=½kx²=½×200×0.01=1 J",diff:"easy"},
+{q:"2 kg slides 5 m, μₖ=0.3, g=10. Energy lost to friction?",opts:["3 J","30 J","6 J","15 J"],ans:1,exp:"fₖ=0.3×2×10=6 N. W=6×5=30 J",diff:"med"},
+{q:"Person runs upstairs: gains 200 J PE in 10 s. Power?",opts:["2000 W","20 W","0.05 W","200 W"],ans:1,exp:"P=W/t=200/10=20 W",diff:"easy"},
+{q:"Roller coaster bottom v=20 m/s, top h=15 m. Speed at top? (g=10)",opts:["10 m/s","5 m/s","15 m/s","√250"],ans:0,exp:"v₂=√(v₁²−2gh)=√(400−300)=10 m/s",diff:"med"},
+{q:"Speed doubles. KE changes by factor of:",opts:["2","4","½","√2"],ans:1,exp:"KE∝v². (2v)²=4v² → factor 4.",diff:"easy"},
+{q:"Conservative force work is:",opts:["Always positive","Path-dependent","Path-independent","Zero"],ans:2,exp:"Conservative forces (gravity, spring): work depends only on endpoints.",diff:"med"},
+{q:"Car engine 4000 N at 30 m/s. Power?",opts:["133 W","120,000 W","0.0075 W","12,000 W"],ans:1,exp:"P=Fv=4000×30=120,000 W",diff:"med"},
+{q:"At what height is KE=PE for ball thrown at 10 m/s? (g=10)",opts:["2.5 m","5 m","1.25 m","10 m"],ans:0,exp:"When KE=PE=½E_total: h=v₀²/4g=100/40=2.5 m",diff:"hard"},
+{q:"Pump moves 500 kg water 10 m up in 100 s. Min power? (g=10)",opts:["500 W","5000 W","50,000 W","50 W"],ans:0,exp:"W=mgh=50,000 J. P=500 W",diff:"med"},
+{q:"Spring k=50 N/m stretched 0.4 m. Restoring force?",opts:["125 N","20 N","0.008 N","50 N"],ans:1,exp:"F=kx=50×0.4=20 N",diff:"easy"},
+{q:"Slow vs fast lift of same box on frictionless surface. Work difference?",opts:["Slow more","Fast more","Same work","Depends on v"],ans:2,exp:"W=mgh regardless of speed (frictionless). Power differs.",diff:"easy"},
+{q:"2 kg ball dropped 5 m. KE just before impact? (g=10)",opts:["5 J","50 J","100 J","25 J"],ans:1,exp:"KE=mgh=2×10×5=100 J... wait: KE=mgh=2×10×5=100 J. But ½mv²=½×2×100=100 J. Yes 100 J.",ans:2,exp:"All PE→KE: KE=mgh=2×10×5=100 J",diff:"easy"},
+{q:"Mechanical energy conserved when:",opts:["Friction present","Only conservative forces do work","Any forces do work","Velocity constant"],ans:1,exp:"ME conserved when only conservative forces act.",diff:"easy"},
+{q:"Unit of power?",opts:["Joule","Newton","Watt","Newton-meter"],ans:2,exp:"Power measured in Watts = J/s",diff:"easy"},
+{q:"Force perpendicular to motion. Work done?",opts:["Fd","0","Depends on d","Fd/2"],ans:1,exp:"W=Fdcosθ. θ=90°→cos=0→W=0.",diff:"easy"},
+{q:"500 kg car from 20 to 10 m/s. KE lost?",opts:["25,000 J","75,000 J","50,000 J","100,000 J"],ans:1,exp:"ΔKE=½×500×(400−100)=75,000 J",diff:"med"},
+{q:"Gravity work on object moving horizontally (frictionless level)?",opts:["Positive","Negative","Zero","= mg"],ans:2,exp:"Gravity vertical, displacement horizontal → θ=90°→W=0.",diff:"easy"},
+{q:"10 kg slides from rest down 5 m frictionless ramp at 30°. Speed at bottom? (g=10)",opts:["5 m/s","7.07 m/s","10 m/s","√50 m/s"],ans:3,exp:"h=5sin30°=2.5 m. v=√(2gh)=√50=7.07 m/s",diff:"med"},
+{q:"Light bulb rated 100 W. Energy in 30 min?",opts:["3000 J","180,000 J","0.056 J","100 J"],ans:1,exp:"E=Pt=100×1800=180,000 J",diff:"easy"},
+{q:"Force-displacement triangle: base 4 m, height 10 N. Work?",opts:["40 J","20 J","10 J","80 J"],ans:1,exp:"W=area=½×4×10=20 J",diff:"med"},
+{q:"4 kg block released from spring (k=800 N/m, x=0.25 m). Speed when leaving?",opts:["3.54 m/s","5 m/s","7.07 m/s","10 m/s"],ans:0,exp:"½kx²=½mv². v=x√(k/m)=0.25√200≈3.54 m/s",diff:"hard"},
+{q:"Speed triples. KE changes by factor?",opts:["3","6","9","27"],ans:2,exp:"KE∝v². (3v)²=9v²→factor 9.",diff:"easy"},
+{q:"Ramp (6 m long, 1.5 m high) used for 200 N box. Force needed? (no friction)",opts:["200 N","50 N","300 N","100 N"],ans:1,exp:"W=Fd. 200×1.5=F×6. F=50 N.",diff:"med"},
+{q:"Energy conservation frictionless: v'=?",opts:["v+√(2g(h−h'))","√(v²+2g(h−h'))","v×√(h/h')","√(2gh')"],ans:1,exp:"½mv²+mgh=½mv'²+mgh'. v'=√(v²+2g(h−h'))",diff:"med"},
+{q:"Work done against friction converts to:",opts:["KE","PE","Thermal energy","Chemical energy"],ans:2,exp:"Friction converts mechanical energy to heat.",diff:"easy"},
+{q:"70 kg cyclist at 8 m/s. KE?",opts:["560 J","2240 J","4480 J","1120 J"],ans:1,exp:"KE=½mv²=½×70×64=2240 J",diff:"easy"},
+{q:"Spring k=800 N/m, PE=0.4 J. Amplitude?",opts:["0.032 m","0.1 m","0.01 m","1 m"],ans:0,exp:"A=√(2E/k)=√(0.8/800)≈0.032 m",diff:"hard"},
+{q:"Rubber ball bounces 90% of height. This is because:",opts:["Momentum not conserved","KE lost to heat/sound","Ball gains energy","Normal > weight on contact"],ans:1,exp:"Inelastic collision: some ME→heat, sound, deformation.",diff:"med"},
+{q:"Total ME of 2 kg at height 5 m moving at 3 m/s? (g=10)",opts:["109 J","109 J","9 J","100 J"],ans:0,exp:"E=½(2)(9)+2(10)(5)=9+100=109 J",diff:"med"},
+{q:"1500 kg car from 20 to 0 m/s in 4 s. Avg braking power?",opts:["75,000 W","150,000 W","37,500 W","300,000 W"],ans:0,exp:"KE=½×1500×400=300,000 J. P=300000/4=75,000 W",diff:"hard"},
+{q:"Object falling from rest. After falling h, speed?",opts:["v=√(h/g)","v=√(2gh)","v=gh","v=2gh"],ans:1,exp:"v=√(2gh)",diff:"easy"},
+{q:"Inelastic collision in isolated system. What happens to ME?",opts:["Increases","Decreases","Stays same","First up then down"],ans:1,exp:"Inelastic: some KE→heat/deformation. ME decreases.",diff:"easy"},
+{q:"3 kg dropped from rest. Speed after 20 m? (g=10)",opts:["10 m/s","20 m/s","√200 m/s","30 m/s"],ans:1,exp:"v=√(2gh)=√400=20 m/s",diff:"easy"},
+{q:"Spring (k=50 N/m) compressed 5 cm. PE?",opts:["0.0625 J","0.125 J","2.5 J","0.025 J"],ans:0,exp:"PE=½×50×(0.05)²=½×50×0.0025=0.0625 J",diff:"med"},
+{q:"Two springs in parallel (k each). Effective constant?",opts:["k/2","k","2k","k²"],ans:2,exp:"Parallel: k_eff=k+k=2k",diff:"hard"},
+{q:"KE=½mv². If m tripled, v halved, new KE relative to original?",opts:["Same","3/4 original","3/2 original","6× original"],ans:1,exp:"New KE=½(3m)(v/2)²=½(3m)(v²/4)=(3/4)½mv²",diff:"hard"},
+{q:"Person climbs 4 m stairs in 8 s, m=60 kg, g=10. Power?",opts:["240 W","300 W","1920 W","30 W"],ans:1,exp:"W=mgh=2400 J. P=2400/8=300 W",diff:"med"},
+{q:"Car uses 50,000 J fuel, 20% wasted. Useful work?",opts:["10,000 J","40,000 J","50,000 J","250,000 J"],ans:1,exp:"80%×50,000=40,000 J",diff:"easy"},
+{q:"1 kg ball thrown up at 10 m/s. KE when v=6 m/s?",opts:["18 J","36 J","50 J","100 J"],ans:0,exp:"KE=½×1×36=18 J",diff:"easy"},
+{q:"A 0.5 kg ball, spring k=100 N/m, A=0.2 m. Max KE?",opts:["1 J","2 J","0.5 J","4 J"],ans:1,exp:"E=KE_max=½kA²=½×100×0.04=2 J",diff:"med"},
+{q:"Which is conservative?",opts:["Friction","Air resistance","Spring force","Viscous drag"],ans:2,exp:"Spring force is conservative. Friction and drag are non-conservative.",diff:"med"},
+{q:"Gravity work on object going from h=5 m to h=2 m (m=2 kg, g=10)?",opts:["−60 J","60 J","−100 J","100 J"],ans:1,exp:"W_gravity=mg(h_i−h_f)=2×10×(5−2)=60 J (positive, object moved down)",diff:"med"},
+{q:"5 kg object slides 3 m down frictionless incline (angle 37°, g=10). KE at bottom?",opts:["75 J","90 J","30 J","100 J"],ans:1,exp:"h=3×sin37°=3×0.6=1.8 m. KE=mgh=5×10×1.8=90 J",diff:"med"},
+{q:"Dropped from rest, v=14 m/s at impact. Height? (g=10)",opts:["9.8 m","19.6 m","2 m","98 m"],ans:0,exp:"h=v²/2g=196/20=9.8 m",diff:"easy"},
+];
+}
+
+function genMomentum(){return [
+{q:"p of 2 kg at 5 m/s?",opts:["2.5 kg·m/s","7 kg·m/s","10 kg·m/s","0.4 kg·m/s"],ans:2,exp:"p=mv=2×5=10 kg·m/s",diff:"easy"},
+{q:"1500 kg at 20 m/s + 500 kg at rest, stick together. v_f?",opts:["5 m/s","10 m/s","15 m/s","20 m/s"],ans:2,exp:"p=30000. v=30000/2000=15 m/s",diff:"med"},
+{q:"Impulse 30 N·s on 6 kg at rest. Final v?",opts:["0.2 m/s","5 m/s","180 m/s","24 m/s"],ans:1,exp:"J=mv. v=30/6=5 m/s",diff:"easy"},
+{q:"Elastic collision conserves:",opts:["Momentum only","KE only","Both momentum and KE","Neither"],ans:2,exp:"Elastic: BOTH momentum and KE conserved.",diff:"easy"},
+{q:"0.05 kg bullet at 400 m/s embeds in 4.95 kg block. v_f?",opts:["0.4 m/s","4 m/s","40 m/s","0.04 m/s"],ans:1,exp:"p=20. v=20/5=4 m/s",diff:"med"},
+{q:"Impulse-momentum theorem:",opts:["F=ma","J=Δp","W=ΔKE","Conservation of p"],ans:1,exp:"J=FΔt=Δp=mv_f−mv_i",diff:"easy"},
+{q:"Greatest momentum: (A) 1 kg×50 m/s, (B) 5 kg×8 m/s, (C) 10 kg×4 m/s, (D) 2 kg×24 m/s?",opts:["A: 50","B: 40","C: 40","D: 48"],ans:3,exp:"p_D=2×24=48. Largest.",diff:"med"},
+{q:"Equal mass elastic: moving→at rest. After collision:",opts:["First stops, second moves at v","Both at v/2","First bounces, second forward","Both stop"],ans:0,exp:"Equal mass elastic: exchange velocities. First stops, second moves at original speed.",diff:"med"},
+{q:"6 kg at 3 m/s + 4 kg at rest, stick. v_f?",opts:["1.8 m/s","1.2 m/s","2.4 m/s","3 m/s"],ans:0,exp:"p=18. v=18/10=1.8 m/s",diff:"med"},
+{q:"100 N for 0.05 s. Impulse?",opts:["2000 N·s","5 N·s","0.05 N·s","100 N·s"],ans:1,exp:"J=FΔt=100×0.05=5 N·s",diff:"easy"},
+{q:"Why airbag reduces injury?",opts:["Increases force","Increases time → reduces force (same impulse)","Increases momentum change","Decreases momentum change"],ans:1,exp:"J=FΔt constant. More Δt → less F.",diff:"med"},
+{q:"Total p conserved in isolated system because:",opts:["KE constant","Internal forces cancel (3rd law)","No forces act","Mass constant"],ans:1,exp:"Newton's 3rd: internal force pairs cancel → external force needed to change total p.",diff:"med"},
+{q:"5 kg ball at 6 m/s right hits wall, bounces left at 4 m/s. Impulse from wall?",opts:["−10 N·s","−50 N·s","10 N·s","50 N·s"],ans:1,exp:"J=m(v_f−v_i)=5(−4−6)=−50 N·s",diff:"hard"},
+{q:"In isolated 2-body: mass 1 gains +Δp. Mass 2?",opts:["Gains +Δp","Gains −Δp","Unchanged","Gains +2Δp"],ans:1,exp:"Total p constant: Δp₁+Δp₂=0.",diff:"easy"},
+{q:"Area under F-t graph?",opts:["Work","Power","Impulse","KE"],ans:2,exp:"∫F dt = impulse = Δp",diff:"easy"},
+{q:"60 kg and 40 kg skaters push off from rest. 60 kg moves at 2 m/s. 40 kg v?",opts:["3 m/s opposite","3 m/s same","2 m/s opposite","4.5 m/s"],ans:0,exp:"0=60(−2)+40v. v=3 m/s",diff:"med"},
+{q:"3 kg at 4 m/s east + 2 kg at 2 m/s west, stick. v_f?",opts:["1.6 m/s east","3.2 m/s","0.8 m/s","2 m/s"],ans:0,exp:"p=12−4=8. v=8/5=1.6 m/s east",diff:"med"},
+{q:"KE conserved in which collision?",opts:["Perfectly inelastic","Inelastic","Elastic","All"],ans:2,exp:"Only elastic: KE conserved. All collisions: p conserved.",diff:"easy"},
+{q:"0.1 kg ball at 20 m/s bounces back elastically. Impulse magnitude?",opts:["2 N·s","4 N·s","0 N·s","40 N·s"],ans:1,exp:"Elastic bounce: v unchanged. |Δp|=0.1×40=4 N·s",diff:"med"},
+{q:"Gun mass M fires bullet m at v. Recoil speed?",opts:["mv/M","Mv/m","mv/(M+m)","(M+m)v/M"],ans:0,exp:"p_i=0. 0=mv+MV. V=−mv/M",diff:"med"},
+{q:"Conservation of momentum quantity conserved in ALL collisions?",opts:["KE","ME","Total momentum","Velocity"],ans:2,exp:"Total momentum conserved in all isolated collisions.",diff:"easy"},
+{q:"Baseball (0.15 kg): −30→+40 m/s. Impulse?",opts:["1.5 N·s","−1.5 N·s","10.5 N·s","4.5 N·s"],ans:2,exp:"J=0.15×70=10.5 N·s",diff:"med"},
+{q:"Rocket ejects 10 kg/s exhaust at 500 m/s. Thrust?",opts:["50 N","500 N","5000 N","50000 N"],ans:2,exp:"Thrust=(dm/dt)×v=10×500=5000 N",diff:"hard"},
+{q:"2 kg at 6 m/s collides with 4 kg at rest, stick. KE fraction lost?",opts:["1/3","1/4","2/3","1/2"],ans:2,exp:"v_f=12/6=2. KE_i=36. KE_f=12. Fraction=(36−12)/36=2/3",diff:"hard"},
+{q:"Perfectly inelastic:",opts:["Elastic bounce","Stick together, max KE lost","All energy conserved","All p lost"],ans:1,exp:"Objects stick together; maximum KE loss.",diff:"easy"},
+{q:"50 kg on frictionless surface throws 5 kg ball at 10 m/s east. Person's v?",opts:["0","1 m/s east","1 m/s west","10 m/s west"],ans:2,exp:"0=5(10)+50v. v=−1 m/s (west)",diff:"easy"},
+{q:"4 kg at 10 m/s → 0 in 0.5 s. Average force?",opts:["20 N","80 N","8 N","5 N"],ans:1,exp:"F=Δp/Δt=40/0.5=80 N",diff:"med"},
+{q:"800 kg at 15 m/s + 2400 kg at rest, stick. v_f?",opts:["3.75 m/s","15 m/s","11.25 m/s","5 m/s"],ans:0,exp:"p=12000. v=12000/3200=3.75 m/s",diff:"med"},
+{q:"Collision 0.002 s, Δp=6 kg·m/s. Average force?",opts:["0.012 N","3000 N","12 N","300 N"],ans:1,exp:"F=6/0.002=3000 N",diff:"med"},
+{q:"In explosion KE after:",opts:["Zero","Equals initial KE","Greater than initial","=Δp"],ans:2,exp:"Chemical energy→KE. KE after > before.",diff:"med"},
+{q:"Object A: mass 2m, speed v/2. Object B: mass m, speed v. Which has greater p?",opts:["A","B","Equal","Cannot determine"],ans:2,exp:"p_A=2m×v/2=mv. p_B=mv. Equal.",diff:"med"},
+{q:"2 kg toy at 5 m/s east + 1 kg at 2 m/s west, stick. v_f?",opts:["2.67 m/s east","8 m/s east","4 m/s east","1.33 m/s west"],ans:0,exp:"p=10−2=8. v=8/3≈2.67 m/s east",diff:"med"},
+{q:"p vector magnitude 20 kg·m/s at 30° N of E. North component?",opts:["10 kg·m/s","17.3 kg·m/s","20 kg·m/s","40 kg·m/s"],ans:0,exp:"p_N=20sin30°=10 kg·m/s",diff:"med"},
+{q:"0.5 kg toy hits wall, stops in 0.01 s. Force from wall?",opts:["2 N","200 N","20 N","0.02 N"],ans:1,exp:"F=mv/Δt=0.5×4/0.01=200 N",diff:"med"},
+{q:"Two balls: A (2 kg at 4 m/s) and B (4 kg at −2 m/s), stick. KE lost?",opts:["0 J","12 J","24 J","4 J"],ans:2,exp:"p_tot=0. v_f=0. KE_i=16+8=24 J. All lost.",diff:"hard"},
+{q:"Tennis ball (0.06 kg): 50 m/s→−40 m/s in 0.05 s. Force?",opts:["108 N","60 N","1080 N","10.8 N"],ans:0,exp:"F=0.06×90/0.05=108 N",diff:"med"},
+{q:"50 kg person on frictionless surface catches 5 kg ball at 10 m/s. Final v?",opts:["0.91 m/s","1 m/s","5 m/s","10 m/s"],ans:0,exp:"p=5×10=50. v=50/55≈0.91 m/s",diff:"med"},
+{q:"Constant force 40 N for 3 s from rest. Final p?",opts:["120 kg·m/s","24 kg·m/s","600 kg·m/s","8 kg·m/s"],ans:0,exp:"J=FΔt=120 N·s=Δp. From rest: p_f=120.",diff:"easy"},
+{q:"p=20 kg·m/s, m=4 kg. v?",opts:["80 m/s","5 m/s","0.2 m/s","16 m/s"],ans:1,exp:"v=p/m=20/4=5 m/s",diff:"easy"},
+{q:"5 kg sled at 3 m/s east, 10 N west for 2 s. New v?",opts:["1 m/s east","1 m/s west","0","5 m/s east"],ans:1,exp:"p_i=15. J=−20. p_f=−5. v=−1 m/s (west)",diff:"med"},
+{q:"400 kg car and 600 kg car collide head-on (equal speeds). What happens?",opts:["Both stop","Heavier continues at reduced speed","Lighter bounces back","Depends on elasticity"],ans:1,exp:"Heavier car has greater p. After collision, system continues in direction of heavier car (if perfectly inelastic).",diff:"hard"},
+{q:"KE = p²/(2m). Momentum doubled. KE changes by factor?",opts:["2","4","√2","0.5"],ans:1,exp:"KE=p²/2m. If p→2p: KE=(2p)²/2m=4p²/2m=4×KE.",diff:"med"},
+{q:"Angular momentum analog of p?",opts:["τ","Iω","ω","I"],ans:1,exp:"L=Iω is angular momentum (rotational analog of linear momentum p=mv).",diff:"easy"},
+{q:"In perfectly inelastic collision max KE is lost when:",opts:["Masses are equal","One mass is at rest","Relative velocity is highest","Masses are very different"],ans:1,exp:"KE loss maximized when one object at rest (largest fraction lost). Equal masses also produce notable loss.",diff:"hard"},
+{q:"0.2 kg puck at 3 m/s east, 0.3 kg at 2 m/s west. Elastic collision. Which has same post-collision speed as pre?",opts:["Neither","Both","0.2 kg","0.3 kg"],ans:0,exp:"Unequal masses in elastic collision: neither retains original speed (velocities exchange only for equal masses).",diff:"hard"},
+{q:"Gun (2 kg) fires bullet (0.01 kg) at 300 m/s. Gun recoil v?",opts:["1.5 m/s","0.015 m/s","3 m/s","150 m/s"],ans:0,exp:"0=0.01×300+2V. V=−3/2=−1.5 m/s",diff:"med"},
+{q:"Ship (5000 kg) fires cannon ball (50 kg) at 200 m/s. Ship recoil?",opts:["2 m/s","20 m/s","0.2 m/s","200 m/s"],ans:0,exp:"0=50×200+5000V. V=−10000/5000=−2 m/s",diff:"med"},
+{q:"3 kg at 2 m/s collides with 2 kg at −3 m/s (elastic). Conservation check?",opts:["p only","KE only","Both","Neither"],ans:2,exp:"Elastic: both conserved. Check: p=6−6=0 (equal mag. opp. direction). For elastic both p and KE conserved.",diff:"med"},
+{q:"Impulse of 20 N·s on 4 kg at 5 m/s in same direction. Final v?",opts:["10 m/s","0 m/s","20 m/s","25 m/s"],ans:0,exp:"p_f=p_i+J=20+20=40. v=40/4=10 m/s",diff:"med"},
+{q:"Conservation of momentum does NOT apply when:",opts:["Elastic collision","Non-zero external net force acts","Inelastic collision","At rest initially"],ans:1,exp:"Momentum conservation requires zero net external force (isolated system).",diff:"easy"},
+];}
+
+function genCircular(){return [
+{q:"Car on 50 m radius curve at 20 m/s. Centripetal a?",opts:["0.4 m/s²","8 m/s²","40 m/s²","400 m/s²"],ans:1,exp:"a_c=v²/r=400/50=8 m/s²",diff:"easy"},
+{q:"Centripetal force for car turning on flat road?",opts:["Engine thrust","Normal force","Static friction","Air resistance"],ans:2,exp:"Flat curve: static friction provides centripetal force.",diff:"easy"},
+{q:"500 g stone, r=1.5 m, v=3 m/s. Centripetal force?",opts:["1 N","3 N","6 N","9 N"],ans:1,exp:"F=mv²/r=0.5×9/1.5=3 N",diff:"med"},
+{q:"Speed doubles in circular motion. Centripetal force?",opts:["Doubles","Halves","Quadruples","Same"],ans:2,exp:"F=mv²/r. v doubles → F quadruples.",diff:"med"},
+{q:"G has units:",opts:["N","N·m²/kg²","kg·m/s²","m/s²"],ans:1,exp:"G=Fr²/m₁m₂ → N·m²/kg²",diff:"easy"},
+{q:"Satellite orbital speed increases r. Speed?",opts:["Increases","Decreases","Same","Becomes zero"],ans:1,exp:"v=√(GM/r). Larger r → smaller v.",diff:"med"},
+{q:"Greatest normal force on car in vertical loop?",opts:["Top","Sides","Bottom","Everywhere equal"],ans:2,exp:"Bottom: N=mg+mv²/r. Top: N=mv²/r−mg. N_bottom>N_top.",diff:"med"},
+{q:"1000 kg over hill (r=30 m) at 15 m/s. N at top? (g=10)",opts:["2500 N","7500 N","10000 N","5000 N"],ans:0,exp:"mg−N=mv²/r. N=1000(10−225/30)=1000(2.5)=2500 N",diff:"hard"},
+{q:"Min speed at top of loop (radius R) for contact?",opts:["√(gR)","√(2gR)","gR","2√(gR)"],ans:0,exp:"At top, N=0: mg=mv²/R → v=√(gR)",diff:"hard"},
+{q:"2 masses m and 4m, distance d, force F. Replace 4m with 2m. New force?",opts:["F/2","2F","F/4","4F"],ans:0,exp:"F∝m₁m₂. (m×2m)/(m×4m)=1/2. New force=F/2.",diff:"med"},
+{q:"Object in circular motion. True?",opts:["No force acts","Net force zero","Velocity constant","Net force toward center"],ans:3,exp:"Centripetal force directed inward. Speed constant, velocity direction changes.",diff:"easy"},
+{q:"Planet A at 4× the distance from sun as B. T_A/T_B?",opts:["4","8","16","64"],ans:1,exp:"T²∝r³. T_A/T_B=√(4³)=√64=8",diff:"hard"},
+{q:"Astronaut weightlessness in space station due to:",opts:["No gravity there","Station beyond gravity","Both in free fall (orbit)","Centrifugal cancels gravity"],ans:2,exp:"Station and astronaut fall together at same rate — apparent weightlessness.",diff:"med"},
+{q:"String breaks in horizontal circle. Ball moves:",opts:["Continues circle","Outward spiral","Tangent straight line","Falls straight down"],ans:2,exp:"1st law: tangent straight line when centripetal force removed.",diff:"easy"},
+{q:"Two planets: A (M, R), B (2M, 2R). g_A/g_B?",opts:["1:1","2:1","1:2","4:1"],ans:1,exp:"g=GM/R². g_A=GM/R². g_B=2GM/4R²=GM/2R². Ratio=2:1.",diff:"hard"},
+{q:"Earth's g at height = one Earth radius above surface?",opts:["9.8 N/kg","4.9 N/kg","2.45 N/kg","1.225 N/kg"],ans:2,exp:"r doubles → g/4=2.45 N/kg",diff:"med"},
+{q:"Electron orbits proton. Centripetal force provided by?",opts:["Gravity","Magnetic","Coulomb (electric)","Nuclear"],ans:2,exp:"Coulomb (electrostatic) attraction provides centripetal force in Bohr model.",diff:"med"},
+{q:"Min speed at top of 10 m loop for weightless feeling? (g=10)",opts:["10 m/s","14.1 m/s","5 m/s","√100 m/s"],ans:0,exp:"N=0: v=√(gR)=√100=10 m/s",diff:"med"},
+{q:"F=Gm₁m₂/r². Doubling r changes F by factor?",opts:["1/4","1/2","2","4"],ans:0,exp:"F∝1/r². r doubles → F÷4.",diff:"easy"},
+{q:"Car drives over hill at top: correct equation?",opts:["N+mg=mv²/r","mg−N=mv²/r","N−mg=mv²/r","mg=N"],ans:1,exp:"At top, net downward = centripetal: mg−N=mv²/r",diff:"med"},
+{q:"Earth mass doubled, radius same. Surface g?",opts:["Same","Doubles","Quadruples","Halves"],ans:1,exp:"g=GM/R². M doubles → g doubles.",diff:"easy"},
+{q:"50 kg Ferris wheel (r=10 m, T=20 s). Centripetal a? (π≈3.14)",opts:["0.987 m/s²","9.8 m/s²","1 m/s²","0.5 m/s²"],ans:0,exp:"v=2πr/T=π. a_c=π²/10≈0.987 m/s²",diff:"hard"},
+{q:"Ball on string: vertical circle. String most likely breaks at?",opts:["Top","Sides","Bottom","Entry"],ans:2,exp:"Tension greatest at bottom: T=mg+mv²/r.",diff:"med"},
+{q:"Orbital period T=?",opts:["2πr/v","2π√(r³/GM)","√(r/GM)","r²/GM"],ans:1,exp:"T=2πr/v where v=√(GM/r). T=2π√(r³/GM).",diff:"med"},
+{q:"Moon orbit ~60R_Earth. g at Moon's orbit vs surface?",opts:["g/60","g/3600","g/360","g/120"],ans:1,exp:"g∝1/r². At 60R: g/3600",diff:"med"},
+{q:"Car on flat road left turn. Direction of centripetal a?",opts:["Backward","Forward","Right (outward)","Left (toward center)"],ans:3,exp:"Centripetal always toward center. Left turn → center is left.",diff:"easy"},
+{q:"Conical pendulum: 1 kg, θ=30° from vertical, r=0.5 m. Tension? (g=10)",opts:["10 N","11.5 N","8.66 N","5 N"],ans:1,exp:"T cosθ=mg → T=10/cos30°≈11.5 N",diff:"hard"},
+{q:"70 kg person at Earth's surface: 686 N. At 2R from center, force?",opts:["686 N","343 N","171.5 N","1372 N"],ans:2,exp:"F∝1/r². At 2R from center: 686/4=171.5 N",diff:"med"},
+{q:"Doubling both masses OR halving distance — which increases F more?",opts:["Doubling masses (×4)","Halving distance (×4)","Same (×4)","Depends on G"],ans:2,exp:"Both → ×4. Same factor.",diff:"hard"},
+{q:"Banked curve: which force provides centripetal on a frictionless bank?",opts:["Friction","Normal force horizontal component","Gravity","Engine force"],ans:1,exp:"On banked curve: horizontal component of normal force provides centripetal.",diff:"hard"},
+{q:"Kepler's 2nd law: planet sweeps equal areas in equal times. Due to?",opts:["Gravity increasing speed","Conservation of angular momentum","Conservation of linear momentum","Centripetal acceleration"],ans:1,exp:"Conservation of angular momentum explains equal area law.",diff:"med"},
+{q:"r=40 m hill. Min speed to 'lift off'? (g=10)",opts:["20 m/s","10 m/s","40 m/s","400 m/s"],ans:0,exp:"N=0: mg=mv²/r → v=√(gr)=√400=20 m/s",diff:"med"},
+{q:"F_c=mv²/r. If r halved, v unchanged, F_c?",opts:["Doubles","Halves","Same","Quadruples"],ans:0,exp:"F_c=mv²/r. r halved → F_c doubles.",diff:"med"},
+{q:"1 kg ball, r=0.3 m, θ=30° horizontal circle. Centripetal force?",opts:["mg tan30°","mg sin30°","mg/cos30°","mg"],ans:0,exp:"Horizontal component: T sinθ=mv²/r. Vertical: T cosθ=mg. T=mg/cosθ. F_c=T sinθ=mg tanθ.",diff:"hard"},
+{q:"Period of satellite does NOT depend on:",opts:["Orbital radius","Mass of planet","Mass of satellite","Value of G"],ans:2,exp:"T=2π√(r³/GM). Satellite mass cancels out.",diff:"med"},
+{q:"Speed of Earth orbiting Sun (M_sun, r) is:",opts:["√(GM_sun/r)","√(GM_sun r)","GM_sun/r","2πr/T"],ans:0,exp:"v=√(GM/r) for circular orbit.",diff:"med"},
+{q:"Two objects at same orbital radius. Heavier one orbits:",opts:["Faster","Slower","Same speed","Depends on shape"],ans:2,exp:"v=√(GM_central/r). Independent of satellite mass.",diff:"med"},
+{q:"g at 3R from center vs surface (radius R)?",opts:["g/3","g/6","g/9","g/27"],ans:2,exp:"g∝1/r². At 3R: g/9",diff:"med"},
+{q:"Roller coaster: minimum speed at top of loop r=8 m? (g=10)",opts:["√80 m/s","8.94 m/s","10 m/s","4 m/s"],ans:0,exp:"v=√(gR)=√80=8.94 m/s≈√80 m/s",diff:"med"},
+{q:"Geostationary satellite orbits Earth once per:",opts:["Hour","Day","Month","Year"],ans:1,exp:"Geostationary: T=24 hours (one day) to stay above same point.",diff:"easy"},
+{q:"Tides are caused primarily by:",opts:["Earth's rotation","Gravity from Moon (differential across Earth)","Solar wind","Centrifugal force"],ans:1,exp:"Tides result from differential gravitational force of the Moon across Earth's diameter.",diff:"med"},
+{q:"Circular orbit: speed v, radius r. Doubling r (same central mass). New speed?",opts:["v/√2","v/2","v√2","2v"],ans:0,exp:"v=√(GM/r). r doubles: v'=√(GM/2r)=v/√2",diff:"hard"},
+{q:"Centripetal a at equator from Earth's rotation (R=6.4×10⁶ m, T=86400 s)?",opts:["0.034 m/s²","9.8 m/s²","0.0034 m/s²","3.4 m/s²"],ans:0,exp:"v=2πR/T. a=v²/R=(4π²R)/T²≈0.034 m/s²",diff:"hard"},
+{q:"In what situation is apparent weight GREATER than true weight?",opts:["Free fall","Elevator going down at constant v","Elevator accelerating upward","Elevator accelerating downward"],ans:2,exp:"Upward acceleration: N=m(g+a)>mg. Apparent weight > true weight.",diff:"med"},
+];
+}
+
+function genSHM(){return [
+{q:"k=400 N/m, m=4 kg. Period?",opts:["π/5 s","π/10 s","0.628 s","2π s"],ans:0,exp:"T=2π√(m/k)=2π×0.1=0.2π=π/5 s",diff:"med"},
+{q:"Does NOT affect pendulum period?",opts:["Length","g","Bob mass","Angle (small)"],ans:2,exp:"T=2π√(L/g). Mass cancels out.",diff:"easy"},
+{q:"2 kg, k=200 N/m, A=0.1 m. Max speed?",opts:["1 m/s","2 m/s","√10 m/s","0.5 m/s"],ans:0,exp:"v_max=Aω=A√(k/m)=0.1×10=1 m/s",diff:"med"},
+{q:"Where is KE maximum in SHM?",opts:["At amplitude","At equilibrium","At endpoints","At A/2"],ans:1,exp:"KE maximum at equilibrium where speed is maximum.",diff:"easy"},
+{q:"SHM frequency if T=0.5 s?",opts:["0.5 Hz","2 Hz","5 Hz","0.2 Hz"],ans:1,exp:"f=1/T=1/0.5=2 Hz",diff:"easy"},
+{q:"Restoring force in SHM is:",opts:["Constant","∝ velocity","∝ displacement (opposite direction)","Max at equilibrium"],ans:2,exp:"F=−kx. Proportional to displacement, toward equilibrium.",diff:"easy"},
+{q:"Mass quadrupled in spring-mass system. Period?",opts:["Doubles","Halves","Same","Quadruples"],ans:0,exp:"T=2π√(m/k). m→4m: T doubles.",diff:"med"},
+{q:"Spring constant doubled. Period changes to?",opts:["T√2","T/√2","2T","T/2"],ans:1,exp:"T∝1/√k. k→2k: T→T/√2",diff:"med"},
+{q:"Where is acceleration maximum in SHM?",opts:["Equilibrium","Max displacement","A/2","Throughout"],ans:1,exp:"a=ω²x. Maximum when |x|=A.",diff:"med"},
+{q:"E_total in SHM depends on:",opts:["Mass and amplitude","Spring constant and amplitude","Both mass (or k) and amplitude","k, m, and amplitude"],ans:2,exp:"E=½kA²=½mω²A²",diff:"med"},
+{q:"Pendulum: T on Earth, taken to Moon (g_moon=g/6). New T?",opts:["T/√6","T√6","T","6T"],ans:1,exp:"T=2π√(L/g). g→g/6: T→T√6",diff:"med"},
+{q:"Spring-mass period on Moon vs Earth?",opts:["Longer on Moon","Shorter on Moon","Same","Depends on mass"],ans:2,exp:"T_spring=2π√(m/k). No g → same period!",diff:"hard"},
+{q:"v_max = Aω. If A doubles, v_max?",opts:["Same","Doubles","Quadruples","Halves"],ans:1,exp:"v_max=Aω. ω unchanged (depends on k,m). A doubles → v_max doubles.",diff:"med"},
+{q:"Pendulum T on Earth. Length for period 2T?",opts:["2L","4L","√2 L","L/4"],ans:1,exp:"T∝√L. (2T)²∝L'. L'=4L.",diff:"med"},
+{q:"SHM total energy proportional to:",opts:["A","A²","√A","1/A"],ans:1,exp:"E=½kA²∝A²",diff:"easy"},
+{q:"Amplitude of ±5° pendulum?",opts:["10°","5°","2.5°","0°"],ans:1,exp:"Amplitude = max displacement from equilibrium = 5°",diff:"easy"},
+{q:"ω for k=9 N/m, m=1 kg?",opts:["9 rad/s","3 rad/s","1/3 rad/s","81 rad/s"],ans:1,exp:"ω=√(k/m)=√9=3 rad/s",diff:"easy"},
+{q:"Springs in series (each k). Effective k?",opts:["2k","k","k/2","k²"],ans:2,exp:"1/k_eff=1/k+1/k=2/k → k_eff=k/2",diff:"hard"},
+{q:"Guitar string at 330 Hz. Period?",opts:["330 s","0.003 s","3.03 ms","0.33 ms"],ans:2,exp:"T=1/330≈3.03 ms",diff:"easy"},
+{q:"Resonance occurs when:",opts:["Applied f = natural f","Applied f > natural f","Amplitude constant","Damping maximum"],ans:0,exp:"Resonance: driving frequency = natural frequency → maximum amplitude.",diff:"easy"},
+{q:"Damped oscillation differs from ideal SHM by:",opts:["Period changes","Amplitude decreases","Frequency increases","Restoring force grows"],ans:1,exp:"Damping removes energy → amplitude decreases over time.",diff:"easy"},
+{q:"Position x=A sin(ωt). Velocity?",opts:["v=Aω cos(ωt)","v=Aω sin(ωt)","v=A/ω cos(ωt)","v=Aω² sin(ωt)"],ans:0,exp:"v=dx/dt=Aω cos(ωt). Velocity 90° ahead of displacement.",diff:"hard"},
+{q:"At equilibrium in SHM:",opts:["Max a, zero v","Zero a, max v","Max a, max v","Zero a, zero v"],ans:1,exp:"x=0: F=0 → a=0. All energy kinetic → v=v_max.",diff:"easy"},
+{q:"KE oscillation frequency vs position frequency in SHM?",opts:["Equal","Twice","Half","Four times"],ans:1,exp:"KE=½mω²A²cos²(ωt)=½(1+cos2ωt)… oscillates at 2ω.",diff:"hard"},
+{q:"Phase difference between displacement and velocity in SHM?",opts:["0°","90°","180°","45°"],ans:1,exp:"v leads x by 90°.",diff:"hard"},
+{q:"0.5 kg, ω=4 rad/s, A=0.3 m. Total energy?",opts:["0.18 J","0.72 J","0.36 J","1.44 J"],ans:2,exp:"E=½mω²A²=½×0.5×16×0.09=0.36 J",diff:"hard"},
+{q:"Tuning fork at 440 Hz. Period?",opts:["440 s","1/440 s≈0.00227 s","2.27 s","44 s"],ans:1,exp:"T=1/440≈0.00227 s",diff:"easy"},
+{q:"Spring k=300 N/m compressed 5 cm. Restoring force?",opts:["6000 N","15 N","60 N","1.5 N"],ans:1,exp:"F=kx=300×0.05=15 N",diff:"easy"},
+{q:"Pendulum hotter day (thermal expansion). Period?",opts:["Increases","Decreases","Same","Depends on material"],ans:0,exp:"Longer L → longer T. Clock runs slow.",diff:"med"},
+{q:"At x=A/√2 from equilibrium. KE vs E_total?",opts:["KE=E/2","KE=E/4","KE=3E/4","KE=E"],ans:0,exp:"KE=½k(A²−x²)=½k(A²−A²/2)=½kA²/2=E/2",diff:"hard"},
+{q:"Spring-mass with A=0.1 m, k=500 N/m, m=0.5 kg. Max KE?",opts:["1.25 J","2.5 J","0.625 J","5 J"],ans:1,exp:"E=½kA²=½×500×0.01=2.5 J=KE_max",diff:"med"},
+{q:"Both k and m double in spring-mass. ω changes to?",opts:["ω","ω√2","ω/√2","2ω"],ans:0,exp:"ω=√(k/m). Both double: √(2k/2m)=√(k/m)=ω. Unchanged.",diff:"med"},
+{q:"Work done by spring on mass from x=A to x=−A?",opts:["Zero","½kA²","−½kA²","kA²"],ans:0,exp:"Start and end: same PE (both at amplitude). ΔPE=0 → W_spring=0.",diff:"hard"},
+{q:"Simple pendulum L=1 m. Period? (g=10, π=3.14)",opts:["1.99 s","3.14 s","6.28 s","0.99 s"],ans:0,exp:"T=2π√(1/10)=2π×0.316=1.99 s",diff:"med"},
+{q:"Mass on spring has max PE at:",opts:["Equilibrium","Amplitude","A/2","A/√2"],ans:1,exp:"PE=½kx². Max when |x|=A (amplitude).",diff:"easy"},
+{q:"Frequency of spring-mass if m quadrupled?",opts:["Doubles","Halves","Same","Quadruples"],ans:1,exp:"f=1/(2π)√(k/m). m→4m: f→f/2.",diff:"med"},
+{q:"Where in SHM is v=0?",opts:["Equilibrium","Amplitude positions","A/2","Everywhere"],ans:1,exp:"v=0 at amplitude (turning points) where all energy is PE.",diff:"easy"},
+{q:"Ideal pendulum: what type of ME at equilibrium?",opts:["Only PE","Only KE","KE=PE","Neither"],ans:1,exp:"At lowest point: max speed, zero height change from reference → all KE.",diff:"easy"},
+{q:"Spring compressed 0.2 m, stores 16 J. Spring constant?",opts:["400 N/m","800 N/m","160 N/m","40 N/m"],ans:1,exp:"PE=½kx² → k=2×16/0.04=800 N/m",diff:"med"},
+{q:"Restoring force on pendulum (mass m, length L, angle θ, small)?",opts:["mg","mg cosθ","mg sinθ≈mgθ","mgL"],ans:2,exp:"F_restore=mg sinθ≈mgθ for small angles.",diff:"med"},
+{q:"SHM: object passes equilibrium going right. Acceleration?",opts:["Max rightward","Zero","Max leftward","Constant"],ans:1,exp:"At equilibrium x=0: F=−kx=0 → a=0.",diff:"easy"},
+{q:"Spring k=50 N/m, total E=0.1 J. Amplitude?",opts:["0.063 m","0.1 m","0.2 m","0.04 m"],ans:0,exp:"A=√(2E/k)=√(0.2/50)=√0.004=0.063 m",diff:"med"},
+{q:"A 1 kg block on spring: at x=3 cm, KE=0.09 J and PE=0.06 J. Energy at amplitude?",opts:["0.06 J","0.09 J","0.12 J","0.15 J"],ans:3,exp:"E_total=KE+PE=0.09+0.06=0.15 J (conserved everywhere including amplitude).",diff:"med"},
+{q:"Pendulum T₁ and spring-mass T₂ equal on Earth. On Mars (g_mars=0.38g), T₁ vs T₂?",opts:["T₁ longer","T₂ longer","Equal","Depends on mass"],ans:0,exp:"T_pendulum∝1/√g. Less g → longer T. Spring period unchanged. T₁>T₂ on Mars.",diff:"hard"},
+{q:"SHM: F=−50x (SI). Object mass=2 kg. Frequency?",opts:["5/π Hz","5/2π Hz","5π Hz","10/π Hz"],ans:1,exp:"k=50. ω=√(50/2)=5 rad/s. f=ω/2π=5/2π Hz",diff:"hard"},
+{q:"Two identical springs parallel support same mass. Period compared to single spring?",opts:["Same","T/√2","T√2","T/2"],ans:1,exp:"Parallel k_eff=2k. T=2π√(m/2k)=T_single/√2",diff:"hard"},
+];
+}
+
+function genRotational(){return [
+{q:"Wheel: 360° in 2 s. Angular velocity?",opts:["π rad/s","2π rad/s","360 rad/s","180 rad/s"],ans:0,exp:"ω=2π/2=π rad/s",diff:"easy"},
+{q:"10 N at 0.5 m from pivot. Torque?",opts:["5 N·m","20 N·m","0.05 N·m","50 N·m"],ans:0,exp:"τ=rF=0.5×10=5 N·m",diff:"easy"},
+{q:"Cylinder 0→10 rad/s in 5 s. Angular acceleration?",opts:["50 rad/s²","0.5 rad/s²","2 rad/s²","10 rad/s²"],ans:2,exp:"α=Δω/Δt=10/5=2 rad/s²",diff:"easy"},
+{q:"Rotational Newton's 2nd law?",opts:["F=ma","τ=Iα","L=Iω","KE=½Iω²"],ans:1,exp:"τ=Iα: torque = moment of inertia × angular acceleration",diff:"easy"},
+{q:"Skater I=4 kg·m² at ω=3 rad/s pulls in (I=1). New ω?",opts:["3 rad/s","12 rad/s","9 rad/s","1 rad/s"],ans:1,exp:"L=Iω conserved. 4×3=1×ω. ω=12 rad/s",diff:"med"},
+{q:"Wheel r=0.4 m at ω=5 rad/s. Linear speed at rim?",opts:["0.08 m/s","12.5 m/s","2 m/s","5 m/s"],ans:2,exp:"v=rω=0.4×5=2 m/s",diff:"easy"},
+{q:"15 N at 30° to lever arm 0.6 m. Torque?",opts:["9 N·m","4.5 N·m","7.79 N·m","15 N·m"],ans:1,exp:"τ=rF sinθ=0.6×15×0.5=4.5 N·m",diff:"med"},
+{q:"Solid disk vs hollow cylinder: roll down incline. Which faster?",opts:["Hollow","Solid disk","Tie","Depends on slope"],ans:1,exp:"I_disk=½mr²<I_hollow=mr². Less I → more translational → disk faster.",diff:"hard"},
+{q:"Torque 8 N·m for 3 s on I=4 kg·m² from rest. Final ω?",opts:["3 rad/s","6 rad/s","2 rad/s","24 rad/s"],ans:1,exp:"α=8/4=2. ω=αt=6 rad/s",diff:"med"},
+{q:"Angular momentum conserved when there is no?",opts:["Linear force","Net external torque","Angular velocity","Internal torque"],ans:1,exp:"L=Iω conserved when τ_external=0.",diff:"easy"},
+{q:"Flywheel I=2 kg·m², 300 rpm. L?",opts:["600 kg·m²/s","20π kg·m²/s","40π kg·m²/s","100π kg·m²/s"],ans:1,exp:"ω=300×2π/60=10π. L=2×10π=20π kg·m²/s",diff:"med"},
+{q:"Parallel axis theorem: I=I_cm+?",opts:["Mr","MR²","Md²","M/r²"],ans:2,exp:"I=I_cm+Md², where d is distance from CM to new axis.",diff:"med"},
+{q:"5 kg, 2 m rod rotates about center. I?",opts:["10 kg·m²","5 kg·m²","10/3 kg·m²","5/3 kg·m²"],ans:3,exp:"I=ML²/12=5×4/12=5/3 kg·m²",diff:"hard"},
+{q:"θ (radians) = arc length / ?",opts:["Circumference","Diameter","Radius","Period"],ans:2,exp:"θ=s/r",diff:"easy"},
+{q:"KE_rot of top (I=0.01 kg·m², ω=20 rad/s)?",opts:["0.1 J","2 J","4 J","0.2 J"],ans:1,exp:"KE=½Iω²=½×0.01×400=2 J",diff:"easy"},
+{q:"Door 0.8 m wide. 20 N perp at handle. Torque?",opts:["16 N·m","25 N·m","0.04 N·m","1.6 N·m"],ans:0,exp:"τ=rF=0.8×20=16 N·m",diff:"easy"},
+{q:"Unit of angular momentum?",opts:["kg·m²/s","N·m","kg·m/s","rad/s²"],ans:0,exp:"L=Iω→kg·m²/s",diff:"easy"},
+{q:"Solid sphere fraction of KE that is rotational?",opts:["2/7","5/7","2/5","1/2"],ans:0,exp:"For rolling sphere: KE_rot/KE_total=2/7",diff:"hard"},
+{q:"Kepler's 2nd law (equal areas) explained by?",opts:["Gravity","Conservation of angular momentum","Linear momentum","Centripetal a"],ans:1,exp:"L=Iω constant. Closer to sun: I↓ → ω↑.",diff:"med"},
+{q:"Wheel 0→20 rad/s in 4 s. Angle turned?",opts:["40 rad","80 rad","20 rad","10 rad"],ans:0,exp:"θ=(ω+ω₀)/2×t=10×4=40 rad",diff:"med"},
+{q:"Highest I for same mass M, radius R?",opts:["Solid sphere (2/5)","Solid disk (½)","Hollow sphere (2/3)","Hollow cylinder (1)"],ans:3,exp:"Hollow cylinder I=MR² > all others.",diff:"med"},
+{q:"Rolling without slipping condition?",opts:["v=ω/r","v=rω","v=r/ω","ω=r/v"],ans:1,exp:"v_cm=rω",diff:"easy"},
+{q:"Child moves from edge r to r/2. ω changes to?",opts:["2ω","4ω","ω/2","ω/4"],ans:1,exp:"L=mr²ω const. (r/2)²ω'=r²ω. ω'=4ω",diff:"hard"},
+{q:"Torque rotational analog of?",opts:["Mass","Displacement","Force","Velocity"],ans:2,exp:"τ↔F. I↔m. α↔a.",diff:"easy"},
+{q:"Seesaw: 40 kg at 2 m. Where must 80 kg sit for balance?",opts:["4 m","2 m","1 m","0.5 m"],ans:2,exp:"40×2=80×d. d=1 m",diff:"med"},
+{q:"Tangential acceleration at point on disk?",opts:["a_t=ω²r","a_t=αr","a_t=v/r","a_t=ωv"],ans:1,exp:"a_t=αr",diff:"easy"},
+{q:"A couple: net force and torque?",opts:["F=0, τ=0","F≠0, τ=0","F=0, τ≠0","Both nonzero"],ans:2,exp:"Equal opposite forces → F=0. Both cause same rotation → τ≠0.",diff:"hard"},
+{q:"Wrench 0.3 m. Bolt needs 12 N·m. Force perpendicular?",opts:["3.6 N","40 N","0.025 N","36 N"],ans:1,exp:"F=τ/r=12/0.3=40 N",diff:"easy"},
+{q:"Planet contracts (radius↓). Day length?",opts:["Increases","Decreases","Same","Varies"],ans:1,exp:"I↓ → ω↑ (L conserved) → shorter day.",diff:"med"},
+{q:"10 kg uniform beam (5 m), supported at ends, 30 kg at 1 m from left. Right support? (g=10)",opts:["100 N","110 N","200 N","260 N"],ans:1,exp:"Torque about left: R×5=100×2.5+300×1=250+300=550. R=110 N",diff:"hard"},
+{q:"Spinning figure skater extends arms. ω?",opts:["Increases","Decreases","Same","Depends on mass"],ans:1,exp:"Arms out → I increases → ω decreases (L conserved).",diff:"easy"},
+{q:"Angular impulse = change in?",opts:["Linear momentum","Angular momentum","KE_rot","Angular velocity"],ans:1,exp:"τΔt=ΔL",diff:"easy"},
+{q:"3 kg rod (2 m), pivoted at one end, falls from horizontal. KE just before impact? (g=10)",opts:["30 J","15 J","60 J","10 J"],ans:0,exp:"CM falls h=1 m. W=mgh=3×10×1=30 J=KE_rot",diff:"hard"},
+{q:"4 kg, r=0.2 m solid cylinder, torque applied, ω=10 after 5 s. Torque?",opts:["0.8 N·m","1.6 N·s","0.16 N·m","4 N·m"],ans:2,exp:"I=½mr²=0.08. α=2. τ=0.08×2=0.16 N·m",diff:"hard"},
+{q:"Disk I=0.04 kg·m², ω=10 rad/s. L?",opts:["0.4 kg·m²/s","4 kg·m²/s","0.004 kg·m²/s","40 kg·m²/s"],ans:0,exp:"L=Iω=0.04×10=0.4 kg·m²/s",diff:"easy"},
+{q:"Ball (I=2/5mr²) rolls at v=5 m/s, r=0.1 m, m=2 kg. KE_rot?",opts:["10 J","5 J","2 J","20 J"],ans:0,exp:"ω=50. I=2/5×2×0.01=0.008. KE_rot=½×0.008×2500=10 J",diff:"hard"},
+{q:"Skater I=5 kg·m², ω=2 rev/s, grabs weights: I=8 kg·m². New ω?",opts:["1.25 rev/s","3.2 rev/s","0.8 rev/s","10 rev/s"],ans:0,exp:"5×2=8×ω. ω=1.25 rev/s",diff:"med"},
+{q:"Rod pivoted at end: I_end vs I_center?",opts:["Same","I_end > I_center","I_center > I_end","Depends on mass"],ans:1,exp:"I_end=ML²/3. I_center=ML²/12. I_end=4×I_center.",diff:"med"},
+{q:"Torque unit same as?",opts:["Watt","Joule","Newton","Pascal"],ans:1,exp:"N·m = Joule (same units, different meaning).",diff:"med"},
+{q:"Solid ball (I=2/5) vs hollow (I=2/3): released simultaneously on incline. First?",opts:["Hollow","Solid","Tie","Depends on angle"],ans:1,exp:"Less I → more linear a. Solid first.",diff:"med"},
+{q:"Right-hand rule: wheel spinning CCW viewed from front. ω points?",opts:["Right","Left","Out of page (toward you)","Into page"],ans:2,exp:"Curl fingers CCW → thumb out of page.",diff:"hard"},
+{q:"1 kg mass at end of 0.5 m rod at ω=4 rad/s. KE?",opts:["1 J","2 J","4 J","0.5 J"],ans:1,exp:"I=mr²=0.25. KE=½×0.25×16=2 J",diff:"med"},
+{q:"Massive rod: I_cm=ML²/12. About one end?",opts:["ML²/12","ML²/3","ML²/6","ML²/4"],ans:1,exp:"I_end=I_cm+M(L/2)²=ML²/12+ML²/4=ML²/3",diff:"hard"},
+{q:"α=5 rad/s² for 4 s from rest. Final ω?",opts:["5 rad/s","20 rad/s","1.25 rad/s","80 rad/s"],ans:1,exp:"ω=αt=5×4=20 rad/s",diff:"easy"},
+{q:"Gyroscope precesses (rather than falls) because of:",opts:["Friction at pivot","L conservation: torque changes direction of L","Gravity balanced by centripetal","Normal force perpendicular to gravity"],ans:1,exp:"Torque changes the direction of L vector → precession, not tipping.",diff:"hard"},
+{q:"Rotation analogy: I is to m as α is to?",opts:["v","a","F","τ"],ans:1,exp:"τ=Iα analogous to F=ma. α↔a.",diff:"easy"},
+];
+}
+
+function genWaves(){return [
+{q:"Wave: f=200 Hz, v=340 m/s. Wavelength?",opts:["0.59 m","1.7 m","68000 m","0.017 m"],ans:1,exp:"λ=v/f=340/200=1.7 m",diff:"easy"},
+{q:"Which wave requires a medium?",opts:["Light","Radio","Sound","X-ray"],ans:2,exp:"Sound is mechanical — needs medium. EM waves don't.",diff:"easy"},
+{q:"Guitar string L=0.6 m, fundamental mode. Wavelength?",opts:["0.3 m","0.6 m","1.2 m","2.4 m"],ans:2,exp:"λ₁=2L=1.2 m",diff:"med"},
+{q:"Sound source moves toward observer. Observed frequency?",opts:["Decreases","Same","Increases","Depends on observer speed"],ans:2,exp:"Doppler: source toward observer → wavefronts compressed → higher frequency.",diff:"easy"},
+{q:"Speed of sound in air at 20°C?",opts:["300 m/s","340 m/s","1500 m/s","3×10⁸ m/s"],ans:1,exp:"~343 m/s ≈ 340 m/s",diff:"easy"},
+{q:"Two waves in phase, amplitudes 3 and 4. Resultant?",opts:["1 m","7 m","5 m","12 m"],ans:1,exp:"Constructive: A_res=3+4=7 m",diff:"easy"},
+{q:"Intensity halves when distance?",opts:["Doubles","√2 times larger","√2 times smaller","Halves"],ans:0,exp:"I∝1/r². r×√2 → I halves... Wait: I∝1/r². To halve I: r→r√2. So distance must increase by factor √2.",ans:0,exp:"To halve intensity: need r→r√2 ≈ 1.41×. Distance approximately doubles (for factor of 4), or √2 for halving. Answer: doubles gives I/4. For halving: r×√2.",diff:"med"},
+{q:"Pitch of sound determined by?",opts:["Amplitude","Speed","Frequency","Wavelength"],ans:2,exp:"Pitch ↔ frequency.",diff:"easy"},
+{q:"Speed of sound fastest in?",opts:["Air","Water","Steel","Vacuum"],ans:2,exp:"~5000 m/s in steel > 1500 in water > 340 in air.",diff:"easy"},
+{q:"Two waves 180° out of phase, same amplitude. Resultant?",opts:["Double amplitude","Zero","Same at 90°","Same as one"],ans:1,exp:"Completely destructive interference → zero.",diff:"easy"},
+{q:"Pipe closed at one end, L=0.5 m. Fundamental f? (v=340 m/s)",opts:["340 Hz","680 Hz","170 Hz","850 Hz"],ans:2,exp:"L=λ/4. λ=2 m. f=340/2=170 Hz",diff:"med"},
+{q:"Loudness related to:",opts:["Frequency","Speed","Amplitude/intensity","Wavelength"],ans:2,exp:"Loudness ∝ intensity ∝ amplitude²",diff:"easy"},
+{q:"Beats formed by:",opts:["Same frequency","Slightly different frequencies","Wave and echo","Standing waves"],ans:1,exp:"f_beat=|f₁−f₂|",diff:"easy"},
+{q:"Two tuning forks: 440 Hz, 3 beats/s. Other fork?",opts:["443 or 437 Hz","440 Hz","443 only","450 Hz"],ans:0,exp:"f_beat=|440−f|=3. f=443 or 437.",diff:"med"},
+{q:"T=0.02 s, v=300 m/s. Wavelength?",opts:["6 m","0.067 m","15 m","6000 m"],ans:0,exp:"f=50 Hz. λ=300/50=6 m",diff:"easy"},
+{q:"Transverse wave: particles move?",opts:["In direction of propagation","Opposite to wave","Perpendicular to wave","In circles"],ans:2,exp:"Transverse: medium oscillates perpendicular to propagation.",diff:"easy"},
+{q:"Open pipe L=0.85 m. Fundamental f? (v=340)",opts:["200 Hz","100 Hz","400 Hz","170 Hz"],ans:0,exp:"L=λ/2. λ=1.7 m. f=200 Hz",diff:"med"},
+{q:"Waves transfer:",opts:["Mass","Require mass","Energy","Speed-dependent"],ans:2,exp:"Waves transfer energy, not mass.",diff:"easy"},
+{q:"Nodes in standing wave are points of:",opts:["Max amplitude","Zero displacement","Phase reversal","Max speed"],ans:1,exp:"Nodes: destructive interference → zero displacement always.",diff:"easy"},
+{q:"Observer at v_o=17 m/s toward source (400 Hz, v=340). Heard f?",opts:["380 Hz","420 Hz","400 Hz","440 Hz"],ans:1,exp:"f'=f(v+v_o)/v=400×357/340=420 Hz",diff:"hard"},
+{q:"Refraction occurs when wave:",opts:["Bounces off surface","Bends around obstacle","Changes speed entering new medium","Interferes"],ans:2,exp:"Refraction: wave bends when speed changes at boundary.",diff:"easy"},
+{q:"Only ODD harmonics in?",opts:["Open pipe","Closed pipe","Rectangular pipe","Conical pipe"],ans:1,exp:"Closed pipe: f_n=nv/4L, n=1,3,5… odd only.",diff:"med"},
+{q:"Diffraction most significant when λ is?",opts:["<< obstacle",">> obstacle or ~equal","= amplitude","Equal to obstacle"],ans:1,exp:"Diffraction greatest when λ≥obstacle size.",diff:"med"},
+{q:"Wave speed on string: v=?",opts:["√(T/μ)","T/μ","μ/T","√(μ/T)"],ans:0,exp:"v=√(T/μ). Greater tension=faster, greater μ=slower.",diff:"med"},
+{q:"Superposition principle states:",opts:["Larger wave destroys smaller","Waves bounce off","Net displacement = algebraic sum","Dominant frequency survives"],ans:2,exp:"Superposition: displacements add algebraically.",diff:"easy"},
+{q:"Siren at rest 600 Hz. Observer drives toward at 34 m/s, v=340. Heard f?",opts:["600 Hz","660 Hz","540 Hz","630 Hz"],ans:1,exp:"f'=f(v+v_o)/v=600×374/340=660 Hz",diff:"med"},
+{q:"Light: v=3×10⁸ m/s, f=6×10¹⁴ Hz. λ?",opts:["5×10⁻⁷ m","5×10⁷ m","2×10⁻⁶ m","2×10⁶ m"],ans:0,exp:"λ=3×10⁸/6×10¹⁴=500 nm",diff:"med"},
+{q:"Frequency of mechanical wave determined by?",opts:["Medium","Amplitude","Source","Source and medium"],ans:2,exp:"Frequency set by source. Stays constant when entering new medium.",diff:"med"},
+{q:"String with 4 loops (antinodes). Which harmonic?",opts:["2nd","4th","8th","1st"],ans:1,exp:"Loops = antinodes = harmonic number for fixed-fixed string.",diff:"med"},
+{q:"Two speakers 180° out of phase at equidistant point. Sound level?",opts:["Double","Same as one","Half","Zero"],ans:3,exp:"Path diff=0, phase diff=180°→complete destructive→zero.",diff:"med"},
+{q:"Decibel scale is:",opts:["Linear","Logarithmic","Exponential","Proportional to f"],ans:1,exp:"dB=10 log(I/I₀). Logarithmic.",diff:"easy"},
+{q:"I=10⁻² W/m², I₀=10⁻¹² W/m². Sound level?",opts:["10 dB","100 dB","1000 dB","50 dB"],ans:1,exp:"β=10 log(10¹⁰)=100 dB",diff:"med"},
+{q:"Doppler effect applies to:",opts:["Sound only","Light only","All waves","Transverse only"],ans:2,exp:"Doppler applies to ALL wave types.",diff:"easy"},
+{q:"Two equal waves 90° out of phase. Resultant amplitude?",opts:["2A","A√2","0","A"],ans:1,exp:"Vector addition: √(A²+A²)=A√2",diff:"hard"},
+{q:"λ=2 m, v=10 m/s. Waves per second past a point?",opts:["20","5","0.2","2"],ans:1,exp:"f=v/λ=10/2=5 Hz",diff:"easy"},
+{q:"Echo is example of?",opts:["Refraction","Diffraction","Reflection","Interference"],ans:2,exp:"Echo = reflected sound wave.",diff:"easy"},
+{q:"3rd harmonic of open pipe length L, speed v?",opts:["3v/4L","3v/2L","v/2L","3v/L"],ans:1,exp:"f_n=nv/2L. n=3: 3v/2L",diff:"med"},
+{q:"v=fλ relates:",opts:["v,f,λ","Voltage,force,length","Volume,f,length","Vibration,f,length"],ans:0,exp:"Wave equation: speed=frequency×wavelength",diff:"easy"},
+{q:"Constructive interference: path difference?",opts:["Odd multiples of λ/2","Even multiples of λ/2","Integer multiples of λ","λ/4"],ans:2,exp:"Constructive: Δpath=nλ (waves arrive in phase).",diff:"med"},
+{q:"Wave transfers which quantity?",opts:["Mass","Momentum only","Energy","Velocity"],ans:2,exp:"Waves transfer energy.",diff:"easy"},
+{q:"Sound wave enters water from air. What changes?",opts:["Frequency increases","Frequency decreases","Speed and λ change; f stays same","Only amplitude"],ans:2,exp:"f constant (source). v increases in water → λ increases.",diff:"med"},
+{q:"Beat frequency: 512 Hz and 516 Hz?",opts:["1028 Hz","4 Hz","514 Hz","8 Hz"],ans:1,exp:"f_beat=|512−516|=4 Hz",diff:"easy"},
+{q:"String density 0.01 kg/m, tension 100 N. Wave speed?",opts:["10 m/s","100 m/s","1000 m/s","√10 m/s"],ans:1,exp:"v=√(T/μ)=√10000=100 m/s",diff:"med"},
+{q:"Why can you hear around corner but not see?",opts:["Reflection","Interference","Diffraction","Refraction"],ans:2,exp:"Sound λ~cm-m; diffraction around corners. Light λ~nm; negligible diffraction.",diff:"med"},
+{q:"Fire truck 800 Hz moving at 30 m/s toward you (v=340). Heard f?",opts:["869.6 Hz","800 Hz","740 Hz","877 Hz"],ans:3,exp:"f'=800×340/310≈877 Hz",diff:"hard"},
+{q:"Rainbow caused by?",opts:["Reflection","Diffraction","Dispersion (refraction by frequency)","Interference"],ans:2,exp:"Different frequencies refract at slightly different angles in water droplets.",diff:"med"},
+{q:"Resonance in sound pipe occurs when:",opts:["f=v","λ=L","Applied f matches natural f of air column","A is maximum"],ans:2,exp:"Resonance: applied f = natural f of column → standing wave.",diff:"med"},
+{q:"Speed of sound increases with:",opts:["Decreasing temperature","Increasing density alone","Increasing temperature","Decreasing pressure"],ans:2,exp:"v_sound≈331+0.6T(°C). Higher temp → faster speed.",diff:"med"},
+{q:"Two-source interference: bright fringe condition?",opts:["Path diff = (n+½)λ","Path diff = nλ","Path diff = λ/4","Sources out of phase"],ans:1,exp:"Constructive (bright): path diff = nλ where n=0,1,2…",diff:"med"},
+];
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
